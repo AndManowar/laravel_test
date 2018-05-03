@@ -10,7 +10,7 @@
         "barryvdh/laravel-ide-helper": "^2.4",
         "fideloper/proxy": "^4.0",
         "laracasts/flash": "^3.0",
-        "laravel/framework": "5.6.*",
+        "laravel/framework": "5.6.1",
         "laravel/tinker": "^1.0",
         "leantony/laravel-grid": "2.0.x-dev"
     },

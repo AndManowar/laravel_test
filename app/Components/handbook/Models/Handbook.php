@@ -41,4 +41,18 @@ class Handbook extends Model
             $this->additionalFields = json_encode($this->additionalFields);
         }
     }
+
+    /**
+     * Get decoded fields
+     *
+     * @return \stdClass[]
+     */
+    public function getFields()
+    {
+        if ($this->additionalFields) {
+            return json_decode($this->additionalFields);
+        }
+
+        return [];
+    }
 }

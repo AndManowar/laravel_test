@@ -16,4 +16,5 @@ Route::group(['prefix' => 'handbook'], function () {
     Route::get('/form/{id?}', 'HandbookController@form')->name('admin.handbook.form');
     Route::get('/delete/{id}', 'HandbookController@delete')->name('admin.handbook.delete');
     Route::get('/add-data/{id}', 'HandbookController@addData')->name('admin.handbook.add-data');
+    Route::post('/save-data/{id}', 'HandbookController@saveData')->name('admin.handbook.save-data');
 });

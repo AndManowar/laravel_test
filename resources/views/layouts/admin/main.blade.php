@@ -48,8 +48,19 @@
 @php echo view('layouts.admin.left') @endphp
 <!-- / main menu-->
 
-<div class="container-fluid">
-    @yield('content')
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body"><!-- stats -->
+            <div class="row">
+                <div class="text-center">
+                    @include('flash::message')
+                </div>
+                @yield('content')
+            </div>
+        </div>
+    </div>
 </div>
 <!-- ////////////////////////////////////////////////////////////////////////////-->
 
@@ -83,5 +94,6 @@
 <script src="{{ asset('admin/js/dashboard-lite.js') }}" type="text/javascript"></script>
 <!-- END PAGE LEVEL JS-->
 @yield('scripts');
+@push('grid_js')
 </body>
 </html>

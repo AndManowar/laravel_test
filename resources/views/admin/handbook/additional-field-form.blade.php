@@ -8,6 +8,7 @@
 
 /**
  * @var integer $index
+ * @var array $additionalField
  */
 ?>
 
@@ -32,8 +33,8 @@
                         <label for="additionalFields-<?=$index?>-name">Название</label>
                         <input type="text" id="additionalFields-<?=$index?>-name" class="form-control"
                                placeholder="Название" name="additionalFields[<?=$index?>][name]"
-                               value="{{ old('additionalFields['.$index.'][name]') }}">
-                            <span class="help-block">
+                               value="{{ $additionalField != null ? $additionalField->name : '' }}">
+                        <span class="help-block">
                             </span>
                     </div>
                 </div>
@@ -43,8 +44,8 @@
                         <label for="additionalFields-<?=$index?>-description">Описание</label>
                         <input type="text" id="additionalFields-<?=$index?>-description" class="form-control"
                                placeholder="Описание" name="additionalFields[<?=$index?>][description]"
-                               value="{{ old('additionalFields['.$index.'][description]') }}">
-                            <span class="help-block">
+                               value="{{ $additionalField != null ? $additionalField->description : '' }}">
+                        <span class="help-block">
                             </span>
                     </div>
                 </div>
@@ -52,22 +53,24 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="additionalFields-<?=$index?>-type">Тип поля</label>
-                        <select id="additionalFields-<?=$index?>-type" name="additionalFields[<?=$index?>][type]" class="form-control"
+                        <select id="additionalFields-<?=$index?>-type" name="additionalFields[<?=$index?>][type]"
+                                class="form-control"
                                 title="">
                             <option value="" selected>-Тип поля-</option>
                             @foreach($fieldTypes as $id => $item)
-                                <option value="{{$id}}" {{ old("relation") == $id ? 'selected' : ''}}>{{$item}}</option>
+                                <option value="{{$id}}" {{ ($additionalField != null ? $additionalField->type : '') == $id ? 'selected' : ''}}>{{$item}}</option>
                             @endforeach
                         </select>
-                            <span class="help-block">
+                        <span class="help-block">
                             </span>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="hidden" id="additionalFields-<?=$index?>-is_required" name="additionalFields[<?=$index?>][is_required]" value="0">
-                        <input type="checkbox" id="additionalFields-<?=$index?>-is_required" @if(old('additionalFields['.$index.'][is_required]')) checked
+                        <input type="hidden" name="additionalFields[<?=$index?>][is_required]" value="0">
+                        <input type="checkbox" id="additionalFields-<?=$index?>-is_required"
+                               @if(isset($additionalField->is_required) && $additionalField->is_required) checked
                                @endif name="additionalFields[<?=$index?>][is_required]" value="1" title="">
                         <label for="remember-me"> Обязательно к заполнению</label>
                         <span class="help-block">

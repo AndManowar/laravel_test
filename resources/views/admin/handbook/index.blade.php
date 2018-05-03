@@ -8,14 +8,19 @@
 ?>
 
 @extends('layouts.admin.main')
-<div class="app-content content container-fluid">
-    <div class="content-wrapper">
-        <div class="content-header row">
-        </div>
-        <div class="card" style="height: 577px;">
-            <div class="card-body">
-                {!! $grid !!}
-            </div>
+@section('content')
+    <script src="{{ asset('vendor/leantony/grid/js/grid.js') }}"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    @stack('grid_js')
+    <div class="card" style="height: 577px;">
+        <div class="card-body">
+            {!! $grid !!}
         </div>
     </div>
-</div>
+@endsection

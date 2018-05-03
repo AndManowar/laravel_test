@@ -13,8 +13,10 @@ use App\Components\handbook\Grids\HandbooksGrid;
 use App\Components\handbook\Grids\HandbooksGridInterface;
 use App\Components\handbook\Helpers\FieldTypeHelper;
 use App\Components\handbook\Models\Handbook;
+use App\Components\handbook\Requests\DataRequest;
 use App\Components\handbook\Services\HandbookService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 /**
  * Class HandbookController
@@ -39,11 +41,11 @@ class HandbookController extends Controller
     /**
      * Handbooks
      *
-     * @param HandbookRequest $request
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      * @throws \Exception
      */
-    public function index(HandbookRequest $request)
+    public function index(Request $request)
     {
         return (new HandbooksGrid())
             ->create(['query' => Handbook::query(), 'request' => $request])
@@ -60,16 +62,18 @@ class HandbookController extends Controller
     {
         $this->middleware('ajax');
 
-        if ($this->handbookService->create($handbookRequest->validated())) {
+        if ($this->handbookService->create($handbookRequest->all())) {
 
             flash('Справочник создан')->success();
-            return redirect()->route('admin.handbook');
+            return response()->json(['url' => route('admin.handbook')]);
         }
 
-        return redirect()->back()->withInput();
+        return response('Error', 500);
     }
 
     /**
+     * Handbook form
+     *
      * @param null $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -77,18 +81,59 @@ class HandbookController extends Controller
     {
         return view('admin.handbook.form', [
             'handbook'      => $this->handbookService->getHandbook($id),
-            'handbooksList' => \App\Facades\Handbook::getList()
+            'handbooksList' => \App\Facades\Handbook::getList(),
+            'fieldTypes'    => FieldTypeHelper::getTitlesForDropdown(),
         ]);
     }
 
-    public function update(HandbookRequest $handbookRequest, $id)
+    /**
+     * @param integer $id
+     * @param HandbookRequest $handbookRequest
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function update($id, HandbookRequest $handbookRequest)
     {
+        $this->middleware('ajax');
 
+        if ($this->handbookService->update($id, $handbookRequest->all())) {
+
+            flash('Справочник изменен')->success();
+            return response()->json(['url' => route('admin.handbook')]);
+        }
+
+        return response('Error', 500);
     }
 
+    public function addData($id)
+    {
+        return view('admin.handbook.form-data', [
+            'id' => $id
+        ]);
+    }
+
+    public function saveData(DataRequest $dataRequest)
+    {
+        echo '<pre>';
+        print_r($dataRequest->all());
+        die();
+    }
+
+    /**
+     * Delete handbook action
+     *
+     * @param integer $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
     public function delete($id)
     {
+        if ($this->handbookService->delete($id)) {
+            flash('Справочник удален')->warning();
+        } else {
+            flash('Невозможно удалить справочник т.к. он является родителем одного из справочников')->error();
+        }
 
+        return redirect(route('admin.handbook'));
     }
 
     public function refreshCache()

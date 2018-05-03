@@ -5,7 +5,7 @@
                 <li class="nav-item mobile-menu hidden-md-up float-xs-left"><a
                             class="nav-link nav-menu-main menu-toggle hidden-xs is-active"><i
                                 class="icon-menu5 font-large-1"></i></a></li>
-                <li class="nav-item"><a href="index.html" class="navbar-brand nav-link"><img alt="branding logo"
+                <li class="nav-item"><a href="{{route('admin.dashboard')}}" class="navbar-brand nav-link"><img alt="branding logo"
                                                                                              src="{{ asset('admin/images/logo/robust-logo-light.png') }}"
                                                                                              data-expand="{{ asset('admin/images/logo/robust-logo-light.png') }}"
                                                                                              data-collapse="{{ asset('admin/images/logo/robust-logo-small.png') }}"

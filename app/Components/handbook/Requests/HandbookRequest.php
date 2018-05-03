@@ -17,14 +17,6 @@ use App\Http\Requests\Request;
 class HandbookRequest extends Request
 {
     /**
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
      * @return array
      */
     public function rules()

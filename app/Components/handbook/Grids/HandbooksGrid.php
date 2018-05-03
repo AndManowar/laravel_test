@@ -19,15 +19,6 @@ class HandbooksGrid extends Grid
     protected $name = 'Handbooks';
 
     /**
-     * List of buttons to be generated on the grid
-     *
-     * @var array
-     */
-    protected $buttonsToGenerate = [
-        'create', 'view', 'delete', 'refresh',
-    ];
-
-    /**
      * Specify if the rows on the table should be clicked to navigate to the record
      *
      * @var bool
@@ -59,7 +50,7 @@ class HandbooksGrid extends Grid
                 ],
                 "filter" => [
                     "enabled"  => true,
-                    "operator" => "="
+                    "operator" => "like"
                 ]
             ],
             "description" => [
@@ -68,7 +59,7 @@ class HandbooksGrid extends Grid
                 ],
                 "filter" => [
                     "enabled"  => true,
-                    "operator" => "="
+                    "operator" => "like"
                 ]
             ],
             "relation"    => [
@@ -88,7 +79,7 @@ class HandbooksGrid extends Grid
                     "type"     => "date",
                     "operator" => "<="
                 ]
-            ],
+            ]
         ];
     }
 
@@ -105,8 +96,7 @@ class HandbooksGrid extends Grid
 
         // crud support
         $this->indexRouteName = 'admin.handbook';
-        $this->createRouteName = 'admin.handbook.form';
-        $this->viewRouteName = 'handbook.show';
+        $this->viewRouteName = 'admin.handbook.add-data';
         $this->deleteRouteName = 'admin.handbook.delete';
     }
 
@@ -132,11 +122,12 @@ class HandbooksGrid extends Grid
      */
     public function configureButtons()
     {
-        $this->buttonsToGenerate = [''];
+        $this->buttonsToGenerate = ['view', 'delete'];
         $this->makeCustomButton([
             'name' => '+',
             'url'  => url('/admin/handbook/form')
         ], 'toolbar');
+
     }
 
     /**
