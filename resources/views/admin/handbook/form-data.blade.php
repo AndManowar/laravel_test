@@ -28,7 +28,7 @@ $route = url('/admin/handbook/save-data/' . $id);
                         <div class="form-body">
                             <h4 class="form-section"><i class="icon-align-center2"></i> Данные справочника</h4>
                             <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="submit_data_btn btn btn-primary hidden">
                                     <i class="icon-check2"></i> Сохранить
                                 </button>
                                 <a href="{{url('/admin/handbook/form/'.$id)}}" class="btn btn-success">Структура

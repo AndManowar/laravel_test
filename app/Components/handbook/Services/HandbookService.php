@@ -31,7 +31,7 @@ class HandbookService
         }
         /** @var Handbook $handbook */
         $handbook = Handbook::findOrFail($id);
-        $handbook->additionalFields = $handbook->getFields();
+        $handbook->additionalFields = $handbook->getDecodedFields();
 
         return $handbook;
     }
@@ -47,7 +47,7 @@ class HandbookService
         $handbook = $this->getHandbook(null);
 
         $handbook->fill($attributes);
-        $handbook->setFields();
+        $handbook->EncodeFields();
 
         return $handbook->save();
     }
@@ -63,7 +63,7 @@ class HandbookService
     {
         $handbook = $this->getHandbook($id);
         $handbook->fill($attributes);
-        $handbook->setFields();
+        $handbook->EncodeFields();
 
         return $handbook->save();
     }
@@ -126,5 +126,29 @@ class HandbookService
         }
 
         return $result;
+    }
+
+    /**
+     * Create handbook data
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function addData(array $data)
+    {
+        foreach ($data['data'] as $id => $data_item) {
+            $handbookData = new HandbookData();
+            $handbookData->data_id = $id;
+            $handbookData->fill($data_item);
+            if (isset($data['additionalData']) && isset($data['additionalData'][$id])) {
+                $handbookData->additionalFieldsData = $data['additionalData'][$id];
+                $handbookData->encodeData();
+            }
+            if (!$handbookData->save()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

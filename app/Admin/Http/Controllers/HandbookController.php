@@ -65,6 +65,7 @@ class HandbookController extends Controller
         if ($this->handbookService->create($handbookRequest->all())) {
 
             flash('Справочник создан')->success();
+
             return response()->json(['url' => route('admin.handbook')]);
         }
 
@@ -98,24 +99,42 @@ class HandbookController extends Controller
         if ($this->handbookService->update($id, $handbookRequest->all())) {
 
             flash('Справочник изменен')->success();
+
             return response()->json(['url' => route('admin.handbook')]);
         }
 
         return response('Error', 500);
     }
 
-    public function addData($id)
+    /**
+     * Show handbook data
+     *
+     * @param integer $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showData($id)
     {
         return view('admin.handbook.form-data', [
-            'id' => $id
+            'id' => $id,
         ]);
     }
 
+    /**
+     * Add data to handbook
+     *
+     * @param DataRequest $dataRequest
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function saveData(DataRequest $dataRequest)
     {
-        echo '<pre>';
-        print_r($dataRequest->all());
-        die();
+        if ($this->handbookService->addData($dataRequest->all())) {
+
+            flash('Данные справочника сохранены')->success();
+
+            return response()->json(['url' => route('admin.handbook')]);
+        }
+
+        return response('Error', 500);
     }
 
     /**

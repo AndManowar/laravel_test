@@ -19,22 +19,29 @@ use App\Http\Requests\Request;
 class DataRequest extends Request
 {
     /**
+     * @var Handbook
+     */
+    private $handbook;
+
+    /**
+     *
+     */
+    protected function before()
+    {
+        $this->handbook = Handbook::findOrFail($this->all()['data'][0]['handbook_id']);
+    }
+
+    /**
      * @return array
      */
     public function rules()
     {
-        $attributes = $this->all();
-
-        $handbook = Handbook::findOrFail($attributes['data'][0]['handbook_id']);
-
         $rules = [
             'data.*.title' => 'required|min:2',
-            'data.*.value' => 'required|min:2'
+            'data.*.value' => 'required|min:2',
         ];
 
-        $rules = array_merge($rules, FieldTypeHelper::getValidationRules($handbook, $attributes['additionalData']));
-
-        return $rules;
+        return array_merge($rules, FieldTypeHelper::getValidationRules($this->handbook));
     }
 
     /**
@@ -42,11 +49,13 @@ class DataRequest extends Request
      */
     public function messages()
     {
-        return [
+        $messages = [
             'data.*.title.required' => 'Поле обязательно к заполнению.',
             'data.*.value.required' => 'Поле обязательно к заполнению.',
             'data.*.title.min'      => 'Длина не может быть меньше :min.',
             'data.*.value.min'      => 'Длина не может быть меньше :min.',
         ];
+
+        return array_merge($messages, FieldTypeHelper::getValidationMessages($this->handbook));
     }
 }

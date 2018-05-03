@@ -35,7 +35,7 @@ class Handbook extends Model
      *
      * @return void
      */
-    public function setFields()
+    public function EncodeFields()
     {
         if ($this->additionalFields) {
             $this->additionalFields = json_encode($this->additionalFields);
@@ -47,7 +47,7 @@ class Handbook extends Model
      *
      * @return \stdClass[]
      */
-    public function getFields()
+    public function getDecodedFields()
     {
         if ($this->additionalFields) {
             return json_decode($this->additionalFields);

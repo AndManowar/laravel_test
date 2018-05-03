@@ -96,7 +96,7 @@ class HandbooksGrid extends Grid
 
         // crud support
         $this->indexRouteName = 'admin.handbook';
-        $this->viewRouteName = 'admin.handbook.add-data';
+        $this->viewRouteName = 'admin.handbook.show-data';
         $this->deleteRouteName = 'admin.handbook.delete';
     }
 

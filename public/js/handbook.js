@@ -49,12 +49,18 @@ $(document).ready(function () {
     // Удалить значение справочника
     $(document).on('click', '.remove_data-item', function (e) {
         e.preventDefault();
+
         $(this).closest('.data-item').remove();
+        if(parseInt($('.data_fields').children('div').length) === 0){
+            $('.submit_data_btn').addClass('hidden');
+        }
     });
 
-    // Добавить допонительное поле структуры справочника
+    // Добавить допонительное поле значения справочника
     $(document).on('click', '.add_new_data_field', function (e) {
         e.preventDefault();
+
+        $('.submit_data_btn').removeClass('hidden');
 
         $.ajax({
             url: '/ajax/add-new-data-field',
@@ -62,7 +68,6 @@ $(document).ready(function () {
             data: {index: $('.data_fields').children('div').length, id: $("#handbook_data_form").data('id')},
             success: function (data) {
                 $(data).appendTo('.data_fields');
-                // $("#handbook_form").load();
             }
         });
     });

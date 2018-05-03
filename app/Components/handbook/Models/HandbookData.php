@@ -20,7 +20,7 @@ class HandbookData extends Model
 {
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'handbook_data';
@@ -36,5 +36,30 @@ class HandbookData extends Model
     public function handbook()
     {
         return $this->belongsTo('App\Handbook');
+    }
+
+    /**
+     * Encode Data
+     * @return void
+     */
+    public function encodeData()
+    {
+        if ($this->additionalFieldsData) {
+            $this->additionalFieldsData = json_encode($this->additionalFieldsData);
+        }
+    }
+
+    /**
+     * Get decoded fields
+     *
+     * @return array
+     */
+    public function getDecodedData()
+    {
+        if ($this->additionalFieldsData) {
+            return json_decode($this->additionalFieldsData);
+        }
+
+        return [];
     }
 }
