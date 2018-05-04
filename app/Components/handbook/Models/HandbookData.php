@@ -35,7 +35,7 @@ class HandbookData extends Model
      */
     public function handbook()
     {
-        return $this->belongsTo('App\Handbook');
+        return $this->belongsTo(Handbook::class);
     }
 
     /**

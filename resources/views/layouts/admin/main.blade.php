@@ -13,46 +13,35 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/bootstrap.css') }}">
-    <!-- font icons-->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/icomoon.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/flag-icon.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/pace.css') }}">
-    <!-- END VENDOR CSS-->
-    <!-- BEGIN ROBUST CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/bootstrap-extended.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/colors.css') }}">
-    <!-- END ROBUST CSS-->
-    <!-- BEGIN Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/vertical-menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/vertical-overlay-menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/palette-gradient.css') }}">
-    <!-- END Page Level CSS-->
-    <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/font-awesome.css') }}">
-    <!-- END Custom CSS-->
+    <title>
+        @isset($title)
+            {{ $title }}
+        @endisset</title>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
       class="vertical-layout vertical-menu 2-columns fixed-navbar">
 
-<!-- navbar-fixed-top-->
 @php echo view('layouts.admin.header') @endphp
 
-<!-- ////////////////////////////////////////////////////////////////////////////-->
-
-
-<!-- main menu-->
 @php echo view('layouts.admin.left') @endphp
-<!-- / main menu-->
 
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
         </div>
-        <div class="content-body"><!-- stats -->
+        <div class="content-body">
             <div class="row">
                 <div class="text-center">
                     @include('flash::message')
@@ -62,8 +51,6 @@
         </div>
     </div>
 </div>
-<!-- ////////////////////////////////////////////////////////////////////////////-->
-
 
 <footer class="footer footer-static footer-light navbar-border">
     <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-left d-xs-block d-md-inline-block">Copyright  &copy; 2017 <a
@@ -72,7 +59,6 @@
                     class="icon-heart5 pink"></i></span></p>
 </footer>
 
-<!-- BEGIN VENDOR JS-->
 <script src="{{ asset('admin/js/jquery.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/js/tether.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/js/bootstrap.min.js') }}" type="text/javascript"></script>
@@ -82,18 +68,13 @@
 <script src="{{ asset('admin/js/jquery.matchHeight-min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/js/screenfull.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/js/pace.min.js') }}" type="text/javascript"></script>
-<!-- BEGIN VENDOR JS-->
-<!-- BEGIN PAGE VENDOR JS-->
 <script src="{{ asset('admin/js/chart.min.js') }}" type="text/javascript"></script>
-<!-- END PAGE VENDOR JS-->
-<!-- BEGIN ROBUST JS-->
 <script src="{{ asset('admin/js/app-menu.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/js/app.js') }}" type="text/javascript"></script>
-<!-- END ROBUST JS-->
-<!-- BEGIN PAGE LEVEL JS-->
 <script src="{{ asset('admin/js/dashboard-lite.js') }}" type="text/javascript"></script>
-<!-- END PAGE LEVEL JS-->
 @yield('scripts');
+
 @push('grid_js')
+@endpush
 </body>
 </html>

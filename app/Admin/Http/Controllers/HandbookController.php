@@ -8,15 +8,15 @@
 
 namespace App\Admin\Http\Controllers;
 
-use App\Admin\Components\handbook\Requests\HandbookRequest;
-use App\Components\handbook\Grids\HandbooksGrid;
-use App\Components\handbook\Grids\HandbooksGridInterface;
-use App\Components\handbook\Helpers\FieldTypeHelper;
-use App\Components\handbook\Models\Handbook;
-use App\Components\handbook\Requests\DataRequest;
-use App\Components\handbook\Services\HandbookService;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Components\handbook\Models\Handbook;
+use App\Components\handbook\Grids\HandbooksGrid;
+use App\Components\handbook\Requests\DataRequest;
+use App\Components\handbook\Helpers\FieldTypeHelper;
+use App\Components\handbook\Services\HandbookService;
+use App\Components\handbook\Grids\HandbooksGridInterface;
+use App\Admin\Components\handbook\Requests\HandbookRequest;
 
 /**
  * Class HandbookController
@@ -88,6 +88,8 @@ class HandbookController extends Controller
     }
 
     /**
+     * Change handbook structure
+     *
      * @param integer $id
      * @param HandbookRequest $handbookRequest
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
@@ -114,8 +116,14 @@ class HandbookController extends Controller
      */
     public function showData($id)
     {
+        $this->middleware('ajax');
+
+        $handbook = $this->handbookService->getHandbook($id);
+
         return view('admin.handbook.form-data', [
-            'id' => $id,
+            'handbook'     => $handbook,
+            'handbookData' => $handbook->handbookData->all(),
+            'relatedData'  => $this->handbookService->getRelatedData($handbook),
         ]);
     }
 
@@ -155,8 +163,64 @@ class HandbookController extends Controller
         return redirect(route('admin.handbook'));
     }
 
+    public function deleteDataItem()
+    {
+        $this->middleware('ajax');
+        echo '<pre>';
+        print_r('test');
+        die();
+    }
+
+    /**
+     * Дополнительное поле формы структуры справочника
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public function additionalHandbookField()
+    {
+        $this->middleware('ajax');
+
+        return view('admin.handbook.additional-field-form', [
+            'fieldTypes'      => FieldTypeHelper::getTitlesForDropdown(),
+            'index'           => \Illuminate\Support\Facades\Request::get('index'),
+            'additionalField' => null
+        ]);
+    }
+
+    /**
+     * Форма записи справочника
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addNewDataField()
+    {
+        $this->middleware('ajax');
+
+        $index = \Illuminate\Support\Facades\Request::get('index');
+        $handbook = $this->handbookService->getHandbook(\Illuminate\Support\Facades\Request::get('id'));
+
+        return view('admin.handbook.single-data-form', [
+            'index'            => $index,
+            'handbook'         => $handbook,
+            'relatedData'      => $this->handbookService->getRelatedData($handbook),
+            'additionalFields' => $this->handbookService->getAdditionalFields($handbook, $index),
+            'data'             => null
+        ]);
+    }
+
+    /**
+     * Refreshing cache
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
     public function refreshCache()
     {
+        \App\Facades\Handbook::setToCache();
 
+        flash('Кэш обновлен')->warning();
+
+        return back();
     }
 }

@@ -47,7 +47,7 @@ class HandbookService
         $handbook = $this->getHandbook(null);
 
         $handbook->fill($attributes);
-        $handbook->EncodeFields();
+        $handbook->encodeFields();
 
         return $handbook->save();
     }
@@ -63,7 +63,7 @@ class HandbookService
     {
         $handbook = $this->getHandbook($id);
         $handbook->fill($attributes);
-        $handbook->EncodeFields();
+        $handbook->encodeFields();
 
         return $handbook->save();
     }
@@ -108,9 +108,10 @@ class HandbookService
     /**
      * @param Handbook $handbook
      * @param integer $index
+     * @param array|null $values
      * @return array
      */
-    public function getAdditionalFields($handbook, $index)
+    public function getAdditionalFields($handbook, $index, array $values = null)
     {
         /** @var \stdClass[] $fields */
         $fields = $handbook->additionalFields;
@@ -122,7 +123,12 @@ class HandbookService
         $result = [];
 
         foreach ($fields as $field) {
-            $result[] = FieldTypeHelper::getFormField($field, $index);
+
+            $result[] = FieldTypeHelper::getFormField(
+                $field,
+                $index,
+                isset($values[$field->name]) ? $values[$field->name] : null
+            );
         }
 
         return $result;
@@ -137,16 +143,18 @@ class HandbookService
     public function addData(array $data)
     {
         foreach ($data['data'] as $id => $data_item) {
+
             $handbookData = new HandbookData();
-            $handbookData->data_id = $id;
             $handbookData->fill($data_item);
+
             if (isset($data['additionalData']) && isset($data['additionalData'][$id])) {
                 $handbookData->additionalFieldsData = $data['additionalData'][$id];
                 $handbookData->encodeData();
             }
-            if (!$handbookData->save()) {
-                return false;
-            }
+
+//            if (!$handbookData->save()) {
+//                return false;
+//            }
         }
 
         return true;

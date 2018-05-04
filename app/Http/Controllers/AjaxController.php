@@ -26,37 +26,4 @@ class AjaxController extends Controller
         $this->middleware('ajax');
     }
 
-    /**
-     * Дополнительное поле формы структуры справочника
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Throwable
-     */
-    public function additionalHandbookField()
-    {
-        return view('admin.handbook.additional-field-form', [
-            'fieldTypes'      => FieldTypeHelper::getTitlesForDropdown(),
-            'index'           => Request::get('index'),
-            'additionalField' => null
-        ]);
-    }
-
-    /**
-     * Форма записи справочника
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function addNewDataField()
-    {
-        $id = Request::get('id');
-        $index = Request::get('index');
-        $handbookService = new HandbookService();
-        $handbook = $handbookService->getHandbook($id);
-        return view('admin.handbook.single-data-form', [
-            'index'            => $index,
-            'id'               => $id,
-            'relatedData'      => $handbookService->getRelatedData($handbook),
-            'additionalFields' => $handbookService->getAdditionalFields($handbook, $index)
-        ]);
-    }
 }

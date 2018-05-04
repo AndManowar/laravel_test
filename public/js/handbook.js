@@ -5,7 +5,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         $.ajax({
-            url: '/ajax/additional-handbook-field',
+            url: '/admin/handbook/additional-handbook-field',
             type: 'GET',
             data: {index: $('.additional_body').size()},
             success: function (data) {
@@ -50,8 +50,24 @@ $(document).ready(function () {
     $(document).on('click', '.remove_data-item', function (e) {
         e.preventDefault();
 
+        if ($(this).data('id')) {
+
+            $.ajax({
+                url: $(this).data('url'),
+                type: 'POST',
+                data: {id: $(this).data('id')},
+                success: function () {
+                    console.log('s')
+                },
+                error: function () {
+                    console.log('e')
+                }
+            });
+        }
+
         $(this).closest('.data-item').remove();
-        if(parseInt($('.data_fields').children('div').length) === 0){
+
+        if (parseInt($('.data_fields').children('div').length) === 0) {
             $('.submit_data_btn').addClass('hidden');
         }
     });
@@ -63,7 +79,7 @@ $(document).ready(function () {
         $('.submit_data_btn').removeClass('hidden');
 
         $.ajax({
-            url: '/ajax/add-new-data-field',
+            url: '/admin/handbook/add-new-data-field',
             type: 'GET',
             data: {index: $('.data_fields').children('div').length, id: $("#handbook_data_form").data('id')},
             success: function (data) {

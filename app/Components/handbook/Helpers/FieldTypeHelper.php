@@ -127,9 +127,10 @@ class FieldTypeHelper
      *
      * @param \stdClass $field
      * @param integer $index
+     * @param null|mixed $value
      * @return string
      */
-    public static function getFormField($field, $index)
+    public static function getFormField($field, $index, $value = null)
     {
         switch ($field->type) {
             case self::TYPE_TEXT_FIELD:
@@ -140,7 +141,7 @@ class FieldTypeHelper
                         class="form-control" 
                         placeholder="'.$field->description.'" 
                         name="additionalData['.$index.']'.'['.$field->name.']'.'" 
-                        value="">';
+                        value="'.$value.'">';
                 break;
             case self::TYPE_TEXT_AREA:
                 return '<label for="additionalData-'.$index.'-'.$field->name.'">'.$field->description.'</label>
@@ -148,7 +149,7 @@ class FieldTypeHelper
                         id="additionalData-'.$index.'-'.$field->name.'" 
                         class="form-control" placeholder="'.$field->description.'" 
                         name="additionalData['.$index.']'.'['.$field->name.']'.'" 
-                        value=""></textarea>';
+                        >'.$value.'</textarea>';
                 break;
             case self::TYPE_CHECKBOX:
                 return '<input 
@@ -171,7 +172,7 @@ class FieldTypeHelper
                         class="form-control" 
                         placeholder="'.$field->description.'" 
                         name="additionalData['.$index.']'.'['.$field->name.']'.'" 
-                        value="">';
+                        value="'.$value.'">';
                 break;
             case self::TYPE_DATE:
                 return '<label for="additionalData-'.$index.'-'.$field->name.'">'.$field->description.'</label>
@@ -181,7 +182,7 @@ class FieldTypeHelper
                         class="form-control" 
                         placeholder="'.$field->description.'" 
                         name="additionalData['.$index.']'.'['.$field->name.']'.'" 
-                        value="">';
+                        value="'.$value.'">';
                 break;
             case self::TYPE_DATETIME:
                 return '<label for="additionalData-'.$index.'-'.$field->name.'">'.$field->description.'</label>
@@ -191,7 +192,7 @@ class FieldTypeHelper
                         class="form-control" 
                         placeholder="'.$field->description.'" 
                         name="additionalData['.$index.']'.'['.$field->name.']'.'" 
-                        value="">';
+                        value="'.$value.'">';
                 break;
                 case self::TYPE_TIME:
                 return '<label for="additionalData-'.$index.'-'.$field->name.'">'.$field->description.'</label>
@@ -201,7 +202,7 @@ class FieldTypeHelper
                         class="form-control" 
                         placeholder="'.$field->description.'" 
                         name="additionalData['.$index.']'.'['.$field->name.']'.'" 
-                        value="">';
+                        value="'.$value.'">';
                 break;
         }
         throw new InvalidArgumentException();

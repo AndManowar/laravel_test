@@ -34,8 +34,7 @@
                         <input type="text" id="additionalFields-<?=$index?>-name" class="form-control"
                                placeholder="Название" name="additionalFields[<?=$index?>][name]"
                                value="{{ $additionalField != null ? $additionalField->name : '' }}">
-                        <span class="help-block">
-                            </span>
+                        <span class="help-block"></span>
                     </div>
                 </div>
 
@@ -45,8 +44,7 @@
                         <input type="text" id="additionalFields-<?=$index?>-description" class="form-control"
                                placeholder="Описание" name="additionalFields[<?=$index?>][description]"
                                value="{{ $additionalField != null ? $additionalField->description : '' }}">
-                        <span class="help-block">
-                            </span>
+                        <span class="help-block"></span>
                     </div>
                 </div>
 
@@ -61,8 +59,7 @@
                                 <option value="{{$id}}" {{ ($additionalField != null ? $additionalField->type : '') == $id ? 'selected' : ''}}>{{$item}}</option>
                             @endforeach
                         </select>
-                        <span class="help-block">
-                            </span>
+                        <span class="help-block"></span>
                     </div>
                 </div>
 
@@ -73,8 +70,7 @@
                                @if(isset($additionalField->is_required) && $additionalField->is_required) checked
                                @endif name="additionalFields[<?=$index?>][is_required]" value="1" title="">
                         <label for="remember-me"> Обязательно к заполнению</label>
-                        <span class="help-block">
-                            </span>
+                        <span class="help-block"></span>
                     </div>
                 </div>
             </div>

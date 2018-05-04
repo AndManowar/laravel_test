@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $relation
  * @property string $created_at
  * @property string $updated_at
- * @property HandbookDatum[] $handbookData
+ * @property HandbookData[] $handbookData
  * @property mixed $handbook_data
  */
 class Handbook extends Model
@@ -27,7 +27,7 @@ class Handbook extends Model
      */
     public function handbookData()
     {
-        return $this->hasMany('App\HandbookDatum');
+        return $this->hasMany(HandbookData::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class Handbook extends Model
      *
      * @return void
      */
-    public function EncodeFields()
+    public function encodeFields()
     {
         if ($this->additionalFields) {
             $this->additionalFields = json_encode($this->additionalFields);

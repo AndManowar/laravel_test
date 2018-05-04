@@ -127,6 +127,10 @@ class HandbooksGrid extends Grid
             'name' => '+',
             'url'  => url('/admin/handbook/form')
         ], 'toolbar');
+        $this->makeCustomButton([
+            'name' => 'refresh cache',
+            'url'  => url('/admin/handbook/refresh-cache')
+        ], 'toolbar');
 
     }
 
@@ -138,7 +142,7 @@ class HandbooksGrid extends Grid
      */
     public function getRowCssStyle(): Closure
     {
-        return function ($gridName, $item) {
+        return function () {
             return "";
         };
     }

@@ -11,6 +11,7 @@ namespace App\Components\handbook\Requests;
 use App\Components\handbook\Helpers\FieldTypeHelper;
 use App\Components\handbook\Models\Handbook;
 use App\Http\Requests\Request;
+use App\Rules\UniqueHandbookDataId;
 
 /**
  * Class DataRequest
@@ -24,11 +25,21 @@ class DataRequest extends Request
     private $handbook;
 
     /**
-     *
+     * @var array
+     */
+    private $data;
+
+
+    /**
+     * Init current handbook to validate additional fields
      */
     protected function before()
     {
-        $this->handbook = Handbook::findOrFail($this->all()['data'][0]['handbook_id']);
+        if (isset($this->all()['data'])) {
+
+            $this->handbook = Handbook::findOrFail(array_pop($this->all()['data'])['handbook_id']);
+            $this->data = $this->all()['data'];
+        }
     }
 
     /**
@@ -37,9 +48,23 @@ class DataRequest extends Request
     public function rules()
     {
         $rules = [
-            'data.*.title' => 'required|min:2',
-            'data.*.value' => 'required|min:2',
+            'data.*.title' => 'required',
+            'data.*.data_id' => ['required', 'integer', new UniqueHandbookDataId($this->handbook->id, $this->data)],
+            'data.*.value' => 'required',
         ];
+
+//        if ($this->data) {
+//            foreach ($this->data as $id => $datum) {
+//
+//                $rules['data.' . $id . '.data_id'] = [
+//                    'required',
+//                    Rule::unique('handbook_data')->ignore(isset($datum['id']) ? $datum['id'] : null)->where(function ($query) {
+//                        /** @var Builder $query */
+//                        $query->where('handbook_id', $this->handbook->id);
+//                    })
+//                ];
+//            }
+//        }
 
         return array_merge($rules, FieldTypeHelper::getValidationRules($this->handbook));
     }
@@ -50,10 +75,12 @@ class DataRequest extends Request
     public function messages()
     {
         $messages = [
-            'data.*.title.required' => 'Поле обязательно к заполнению.',
-            'data.*.value.required' => 'Поле обязательно к заполнению.',
-            'data.*.title.min'      => 'Длина не может быть меньше :min.',
-            'data.*.value.min'      => 'Длина не может быть меньше :min.',
+            'data.*.data_id.required' => 'Поле обязательно к заполнению.',
+            'data.*.data_id.unique'   => 'Поле должно быть уникальным.',
+            'data.*.title.required'   => 'Поле обязательно к заполнению.',
+            'data.*.value.required'   => 'Поле обязательно к заполнению.',
+            'data.*.title.min'        => 'Длина не может быть меньше :min.',
+            'data.*.value.min'        => 'Длина не может быть меньше :min.',
         ];
 
         return array_merge($messages, FieldTypeHelper::getValidationMessages($this->handbook));

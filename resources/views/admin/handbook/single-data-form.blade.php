@@ -7,10 +7,11 @@
  */
 
 /**
- * @var integer $id
+ * @var \App\Components\handbook\Models\Handbook $handbook
  * @var integer $index
  * @var array $relatedData
  * @var array $additionalFields
+ * @var \App\Components\handbook\Models\HandbookData $data
  */
 ?>
 
@@ -23,29 +24,43 @@
             <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             <div class="heading-elements">
                 <ul class="list-inline mb-0">
-                    <li><a href="" class="remove_data-item"><i class="icon-cross2"></i></a></li>
+                    <li><a href="" class="remove_data-item" data-id="<?= $data != null ? $data->id : null?>"
+                           data-url="{{route('admin.handbook.delete-data-item')}}"><i class="icon-cross2"></i></a></li>
                 </ul>
             </div>
         </div>
         <div class="card-body collapse in">
             <div class="card-block">
-                <input type="hidden" name="data[<?= $index ?>][handbook_id]" value="<?= $id ?>">
-                <div class="col-md-6">
+                <input type="hidden" name="data[<?= $index ?>][handbook_id]" value="<?= $handbook->id ?>">
+                @if($data != null)
+                    <input type="hidden" name="data[<?= $index ?>][id]" value="<?= $data->id ?>">
+                @endif
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="data-<?=$index?>-value">Значение</label>
-                        <input type="text" id="data-<?=$index?>-value" class="form-control"
-                               placeholder="Значение" name="data[<?= $index ?>][value]"
-                               value="">
+                        <label for="data-<?=$index?>-data_id">ID</label>
+                        <input type="text" id="data-<?=$index?>-data_id" class="form-control"
+                               placeholder="ID" name="data[<?= $index ?>][data_id]"
+                               value="{{$data != null ? $data->data_id : ''}}">
                         <span class="help-block"></span>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="data-<?=$index?>-value">Значение</label>
+                        <input type="text" id="data-<?=$index?>-value" class="form-control"
+                               placeholder="Значение" name="data[<?= $index ?>][value]"
+                               value="{{$data != null ? $data->value : ''}}">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="data-<?=$index?>-title">Описание</label>
                         <input type="text" id="data-<?=$index?>-title" class="form-control"
                                placeholder="Описание" name="data[<?= $index ?>][title]"
-                               value="">
+                               value="{{$data != null ? $data->title : ''}}">
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -58,7 +73,7 @@
                                     title="">
                                 <option value="" selected>-Родительское значение-</option>
                                 @foreach($relatedData as $item)
-                                    <option value="{{$item->data_id}}">{{$item->title}}</option>
+                                    <option value="{{$item->data_id}}" {{ ($data != null ? $data->relation : '') == $item->data_id ? 'selected' : ''}} >{{$item->title}}</option>
                                 @endforeach
                             </select>
                             <span class="help-block"></span>
@@ -66,13 +81,12 @@
                     </div>
                 @endif
                 @if($additionalFields)
-                    @php $count = round(12/count($additionalFields)); @endphp
                     <div class="col-md-12 data-item">
                         <div class="card">
                             <div class="card-body collapse in">
                                 <div class="card-block">
                                     @foreach($additionalFields as $field)
-                                        <div class="col-md-<?= $count ?>">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 @php echo $field; @endphp
                                                 <span class="help-block"></span>

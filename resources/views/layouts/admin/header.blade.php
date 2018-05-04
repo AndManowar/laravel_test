@@ -5,11 +5,12 @@
                 <li class="nav-item mobile-menu hidden-md-up float-xs-left"><a
                             class="nav-link nav-menu-main menu-toggle hidden-xs is-active"><i
                                 class="icon-menu5 font-large-1"></i></a></li>
-                <li class="nav-item"><a href="{{route('admin.dashboard')}}" class="navbar-brand nav-link"><img alt="branding logo"
-                                                                                             src="{{ asset('admin/images/logo/robust-logo-light.png') }}"
-                                                                                             data-expand="{{ asset('admin/images/logo/robust-logo-light.png') }}"
-                                                                                             data-collapse="{{ asset('admin/images/logo/robust-logo-small.png') }}"
-                                                                                             class="brand-logo"></a>
+                <li class="nav-item"><a href="{{route('admin.dashboard')}}" class="navbar-brand nav-link"><img
+                                alt="branding logo"
+                                src="{{ asset('admin/images/logo/robust-logo-light.png') }}"
+                                data-expand="{{ asset('admin/images/logo/robust-logo-light.png') }}"
+                                data-collapse="{{ asset('admin/images/logo/robust-logo-small.png') }}"
+                                class="brand-logo"></a>
                 </li>
                 <li class="nav-item hidden-md-up float-xs-right"><a data-toggle="collapse" data-target="#navbar-mobile"
                                                                     class="nav-link open-navbar-container"><i
@@ -24,9 +25,6 @@
                                     class="icon-menu5"> </i></a></li>
                     <li class="nav-item hidden-sm-down"><a href="#" class="nav-link nav-link-expand"><i
                                     class="ficon icon-expand2"></i></a></li>
-                    <li class="nav-item hidden-sm-down"><a href="https://pixinvent.com/bootstrap-admin-template/robust/"
-                                                           target="_blank" class="btn btn-success upgrade-to-pro">Upgrade
-                            to PRO $24</a></li>
                 </ul>
                 <ul class="nav navbar-nav float-xs-right">
                     <li class="dropdown dropdown-notification nav-item"><a href="#" data-toggle="dropdown"
