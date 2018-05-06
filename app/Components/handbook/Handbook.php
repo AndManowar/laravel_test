@@ -6,14 +6,17 @@
  * Time: 12:23
  */
 
-namespace App\Services\handbook;
+namespace App\Components\handbook;
 
-use App\Services\handbook\Contracts\HandbookInterface;
+use App\Components\handbook\Models\HandbookData;
 use Cache;
+use App\Components\handbook\Contracts\HandbookInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use \App\Components\handbook\Models\Handbook as HandbookModel;
 
 /**
  * Class Handbook
- * @package App\Services\handbook
+ * @package App\Components\handbook
  */
 class Handbook implements HandbookInterface
 {
@@ -48,7 +51,8 @@ class Handbook implements HandbookInterface
      * Get handbook by name
      *
      * @param string $name
-     * @return \App\Components\handbook\Models\Handbook|array
+     * @return \App\Components\handbook\Models\Handbook
+     * @throws NotFoundHttpException
      */
     public function get($name)
     {
@@ -56,7 +60,7 @@ class Handbook implements HandbookInterface
             return $this->cachedHandbooks[$name];
         }
 
-        return [];
+        throw new NotFoundHttpException();
     }
 
     /**
@@ -66,7 +70,33 @@ class Handbook implements HandbookInterface
      */
     public function getList()
     {
-        return \App\Components\handbook\Models\Handbook::all()->pluck('systemName', 'id')->all();
+        return HandbookModel::all()->pluck('systemName', 'id')->all();
+    }
+
+    /**
+     * Get data record by data_id fields and handbook name
+     *
+     * @param string $name
+     * @param integer $data_id
+     * @return HandbookData
+     * @throws NotFoundHttpException
+     */
+    public function getRecord($name, $data_id)
+    {
+        return collect($this->get($name)->handbookData)->firstWhere('data_id', '=', $data_id)->first();
+    }
+
+    /**
+     * Get child handbook data related to parent data data_id field
+     *
+     * @param string $childName
+     * @param integer $parentDataId
+     * @return array
+     * @throws NotFoundHttpException
+     */
+    public function getChildData($childName, $parentDataId)
+    {
+        return collect($this->get($childName)->handbookData)->where('relation', '=', $parentDataId)->all();
     }
 
     /**
@@ -77,7 +107,7 @@ class Handbook implements HandbookInterface
      */
     public function setToCache()
     {
-        foreach (\App\Components\handbook\Models\Handbook::all() as $handbook) {
+        foreach (HandbookModel::all() as $handbook) {
             $this->cachedHandbooks[$handbook->systemName] = $handbook;
         }
 
@@ -97,10 +127,5 @@ class Handbook implements HandbookInterface
         if (!$this->cachedHandbooks) {
             $this->setToCache();
         }
-    }
-
-    public function getRecord($name, $data_id)
-    {
-        // TODO: Implement getRecord() method.
     }
 }

@@ -6,9 +6,9 @@
  * Time: 12:03
  */
 
-namespace App\Facades;
+namespace App\Components\handbook\Facades;
 
-use App\Services\handbook\Contracts\HandbookInterface;
+use App\Components\handbook\Contracts\HandbookInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**

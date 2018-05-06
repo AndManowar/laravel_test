@@ -50,22 +50,27 @@ $(document).ready(function () {
     $(document).on('click', '.remove_data-item', function (e) {
         e.preventDefault();
 
-        if ($(this).data('id')) {
+        var input = $(this);
 
-            $.ajax({
-                url: $(this).data('url'),
-                type: 'POST',
-                data: {id: $(this).data('id')},
-                success: function () {
-                    console.log('s')
-                },
-                error: function () {
-                    console.log('e')
-                }
-            });
+        if (input.data('id')) {
+
+            if (confirm(input.data('confirm').toString())) {
+                $.ajax({
+                    url: input.data('url'),
+                    type: 'GET',
+                    data: {id: input.data('id')},
+                    success: function () {
+                        input.closest('.data-item').remove();
+                    },
+                    error: function (response) {
+                        alert($.parseJSON(response.responseText).message.join(' '));
+                    }
+                });
+            }
+        } else {
+            input.closest('.data-item').remove();
         }
 
-        $(this).closest('.data-item').remove();
 
         if (parseInt($('.data_fields').children('div').length) === 0) {
             $('.submit_data_btn').addClass('hidden');
@@ -84,6 +89,9 @@ $(document).ready(function () {
             data: {index: $('.data_fields').children('div').length, id: $("#handbook_data_form").data('id')},
             success: function (data) {
                 $(data).appendTo('.data_fields');
+            },
+            error: function (response) {
+                alert($.parseJSON(response.responseText).message.join(' '));
             }
         });
     });

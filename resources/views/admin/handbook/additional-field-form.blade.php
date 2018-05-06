@@ -21,7 +21,8 @@
             <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             <div class="heading-elements">
                 <ul class="list-inline mb-0">
-                    <li><a href="" class="remove_additional_field"><i class="icon-cross2"></i></a></li>
+                    <li><a href="" class="remove_additional_field"><i
+                                    class="icon-cross2"></i></a></li>
                 </ul>
             </div>
         </div>

@@ -6,13 +6,13 @@
  * Time: 12:20
  */
 
-namespace App\Services\handbook\Contracts;
+namespace App\Components\handbook\Contracts;
 
 use App\Components\handbook\Models\Handbook;
 
 /**
  * Interface HandbookInterface
- * @package App\Services\handbook\Contracts
+ * @package App\Components\handbook\Contracts
  */
 interface HandbookInterface
 {
@@ -45,6 +45,24 @@ interface HandbookInterface
      */
     public function readFromCache();
 
+    /**
+     * Get data record by data_id fields and handbook name
+     *
+     * @param string $name
+     * @param integer $data_id
+     * @return HandbookData
+     * @throws NotFoundHttpException
+     */
     public function getRecord($name, $data_id);
+
+    /**
+     * Get child handbook data related to parent data data_id field
+     *
+     * @param string $childName
+     * @param integer $parentDataId
+     * @return array
+     * @throws NotFoundHttpException
+     */
+    public function getChildData($childName, $parentDataId);
 
 }

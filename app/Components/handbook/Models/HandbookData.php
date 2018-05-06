@@ -40,6 +40,7 @@ class HandbookData extends Model
 
     /**
      * Encode Data
+     *
      * @return void
      */
     public function encodeData()
@@ -56,10 +57,6 @@ class HandbookData extends Model
      */
     public function getDecodedData()
     {
-        if ($this->additionalFieldsData) {
-            return json_decode($this->additionalFieldsData);
-        }
-
-        return [];
+        return $this->additionalFieldsData ? json_decode($this->additionalFieldsData) : [];
     }
 }

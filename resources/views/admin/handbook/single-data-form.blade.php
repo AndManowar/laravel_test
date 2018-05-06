@@ -25,7 +25,9 @@
             <div class="heading-elements">
                 <ul class="list-inline mb-0">
                     <li><a href="" class="remove_data-item" data-id="<?= $data != null ? $data->id : null?>"
-                           data-url="{{route('admin.handbook.delete-data-item')}}"><i class="icon-cross2"></i></a></li>
+                           data-url="{{route('admin.handbook.delete-data-item')}}"
+                           data-confirm="Вы уверенны что хотите безвозвратно удалить запись?"><i
+                                    class="icon-cross2"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -72,8 +74,8 @@
                                     class="form-control"
                                     title="">
                                 <option value="" selected>-Родительское значение-</option>
-                                @foreach($relatedData as $item)
-                                    <option value="{{$item->data_id}}" {{ ($data != null ? $data->relation : '') == $item->data_id ? 'selected' : ''}} >{{$item->title}}</option>
+                                @foreach($relatedData as $id => $item)
+                                    <option value="{{$id}}" {{ ($data != null ? $data->relation : '') == $id ? 'selected' : ''}} >{{$item}}</option>
                                 @endforeach
                             </select>
                             <span class="help-block"></span>

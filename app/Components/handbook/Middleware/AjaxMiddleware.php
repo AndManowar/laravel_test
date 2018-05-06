@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Components\handbook\Middleware;
 
 use Closure;
 use Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class AjaxMiddleware
@@ -18,11 +18,12 @@ class AjaxMiddleware
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure $next
      * @return mixed
+     * @throws BadRequestHttpException
      */
     public function handle($request, Closure $next)
     {
         if (!Request::ajax()) {
-            throw new NotFoundHttpException();
+            throw new BadRequestHttpException('Request is not ajax');
         }
 
         return $next($request);

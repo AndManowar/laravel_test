@@ -60,6 +60,6 @@ $route = url('/admin/handbook/save-data/' . $handbook->id);?>
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/handbook.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/handbook/handbook.js') }}" type="text/javascript"></script>
 @stop
 

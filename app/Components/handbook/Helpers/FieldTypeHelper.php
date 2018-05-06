@@ -96,16 +96,16 @@ class FieldTypeHelper
             'title'              => 'Время и дата',
             'validationRules'    => 'date_format:Y-m-d\TH:i',
             'validationMessages' => [
-                'date_format'     => 'Неверный формат времени и даты',
-                'required' => 'Поле обязательно к заполнению',
+                'date_format' => 'Неверный формат времени и даты',
+                'required'    => 'Поле обязательно к заполнению',
             ],
         ],
-        self::TYPE_TIME   => [
+        self::TYPE_TIME       => [
             'title'              => 'Время',
             'validationRules'    => 'date_format:H:i',
             'validationMessages' => [
-                'date_format'     => 'Значение должно иметь времени',
-                'required' => 'Поле обязательно к заполнению',
+                'date_format' => 'Значение должно иметь времени',
+                'required'    => 'Поле обязательно к заполнению',
             ],
         ],
     ];
@@ -194,7 +194,7 @@ class FieldTypeHelper
                         name="additionalData['.$index.']'.'['.$field->name.']'.'" 
                         value="'.$value.'">';
                 break;
-                case self::TYPE_TIME:
+            case self::TYPE_TIME:
                 return '<label for="additionalData-'.$index.'-'.$field->name.'">'.$field->description.'</label>
                         <input 
                         type="time" 
@@ -226,6 +226,7 @@ class FieldTypeHelper
                 $rules['additionalData.*.'.$field->name] = self::RULE_REQUIRED;
             }
 
+            // Если правило валидации уже есть в массиве правил, то добавляем его через "."
             if (array_key_exists('additionalData.*.'.$field->name, $rules)) {
                 $rules['additionalData.*.'.$field->name] .= self::$typesList[$field->type]['validationRules'];
             } else {

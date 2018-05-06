@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AjaxMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -62,6 +61,6 @@ class Kernel extends HttpKernel
         'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'ajax'          => AjaxMiddleware::class
+        'ajax'          => \App\Components\handbook\Middleware\AjaxMiddleware::class
     ];
 }

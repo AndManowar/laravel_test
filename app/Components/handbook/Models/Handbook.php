@@ -49,10 +49,24 @@ class Handbook extends Model
      */
     public function getDecodedFields()
     {
-        if ($this->additionalFields) {
-            return json_decode($this->additionalFields);
+        return $this->additionalFields ? json_decode($this->additionalFields) : [];
+    }
+
+    /**
+     * Get parent handbook
+     *
+     * @return string
+     */
+    public function getParent()
+    {
+        if ($this->relation) {
+
+            /** @var Handbook $handbook */
+            $handbook = Handbook::findOrFail($this->relation);
+
+            return $handbook->systemName;
         }
 
-        return [];
+        return 'Not Set';
     }
 }

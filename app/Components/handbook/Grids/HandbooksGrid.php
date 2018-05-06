@@ -2,6 +2,7 @@
 
 namespace App\Components\handbook\Grids;
 
+use App\Components\handbook\Facades\Handbook;
 use Closure;
 use Leantony\Grid\Grid;
 
@@ -38,38 +39,40 @@ class HandbooksGrid extends Grid
                 "label"  => "ID",
                 "filter" => [
                     "enabled"  => true,
-                    "operator" => "="
+                    "operator" => "=",
                 ],
-                "styles" => [
-                    "column" => "col-md-2"
-                ]
             ],
             "systemName"  => [
+                "label"  => "System Name",
                 "search" => [
-                    "enabled" => true
+                    "enabled" => true,
                 ],
                 "filter" => [
                     "enabled"  => true,
-                    "operator" => "like"
-                ]
+                    "operator" => "like",
+                ],
             ],
             "description" => [
                 "search" => [
-                    "enabled" => true
+                    "enabled" => true,
                 ],
                 "filter" => [
                     "enabled"  => true,
-                    "operator" => "like"
-                ]
+                    "operator" => "like",
+                ],
             ],
             "relation"    => [
-                "search" => [
-                    "enabled" => true
-                ],
+                "label"  => "Parent Handbook",
                 "filter" => [
                     "enabled"  => true,
-                    "operator" => "="
-                ]
+                    "operator" => "=",
+                    "type"     => "select",
+                    "data"     => Handbook::getList(),
+                ],
+                'data'   => function ($handbook) {
+                    /** @var \App\Components\handbook\Models\Handbook $handbook */
+                    return $handbook->getParent();
+                },
             ],
             "created_at"  => [
                 "sort"   => false,
@@ -77,9 +80,9 @@ class HandbooksGrid extends Grid
                 "filter" => [
                     "enabled"  => true,
                     "type"     => "date",
-                    "operator" => "<="
-                ]
-            ]
+                    "operator" => "<=",
+                ],
+            ],
         ];
     }
 
@@ -91,11 +94,11 @@ class HandbooksGrid extends Grid
     public function setRoutes()
     {
         // searching, sorting and filtering
-        $this->sortRouteName = 'admin.handbook';
-        $this->searchRoute = 'admin.handbook';
+        $this->sortRouteName = 'admin.handbooks';
+        $this->searchRoute = 'admin.handbooks';
 
         // crud support
-        $this->indexRouteName = 'admin.handbook';
+        $this->indexRouteName = 'admin.handbooks';
         $this->viewRouteName = 'admin.handbook.show-data';
         $this->deleteRouteName = 'admin.handbook.delete';
     }
@@ -122,16 +125,19 @@ class HandbooksGrid extends Grid
      */
     public function configureButtons()
     {
-        $this->buttonsToGenerate = ['view', 'delete'];
+        $this->clearButtons();
+        $this->editRowButton('view', ['name' => '']);
+        $this->editRowButton('delete', ['name' => '']);
+
         $this->makeCustomButton([
             'name' => '+',
-            'url'  => url('/admin/handbook/form')
-        ], 'toolbar');
-        $this->makeCustomButton([
-            'name' => 'refresh cache',
-            'url'  => url('/admin/handbook/refresh-cache')
+            'url'  => url('/admin/handbook/form'),
         ], 'toolbar');
 
+        $this->makeCustomButton([
+            'name' => 'refresh cache',
+            'url'  => route('admin.handbook.refresh-cache'),
+        ], 'toolbar');
     }
 
     /**

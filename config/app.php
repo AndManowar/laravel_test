@@ -151,7 +151,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
-        \App\Providers\HandbookServiceProvider::class,
+        \App\Components\handbook\Providers\HandbookServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
 
 
@@ -217,7 +217,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Handbook' => \App\Facades\Handbook::class
+        'Handbook' => \App\Components\handbook\Facades\Handbook::class
     ],
 
 ];

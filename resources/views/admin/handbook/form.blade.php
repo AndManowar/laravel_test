@@ -97,5 +97,5 @@ $route = $handbook->exists ? url('/admin/handbook/update/' . $handbook->id) : ro
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/handbook.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/handbook/handbook.js') }}" type="text/javascript"></script>
 @stop
