@@ -22,3 +22,12 @@ Route::group(['prefix' => 'handbook'], function () {
     Route::get('/add-new-data-field', 'HandbookController@addNewDataField')->name('admin.handbook.add-new-data-field');
     Route::get('/refresh-cache', 'HandbookController@refreshCache')->name('admin.handbook.refresh-cache');
 });
+
+Route::get('/settings', 'SettingsController@index')->name('admin.settings');
+
+Route::group(['prefix' => 'setting'], function () {
+    Route::post('/create', 'SettingsController@create')->name('admin.setting.create');
+    Route::post('/update/{id}', 'SettingsController@update')->name('admin.setting.update');
+    Route::get('/form/{id?}', 'SettingsController@form')->name('admin.setting.form');
+    Route::get('/get-value-field', 'SettingsController@getValueField')->name('admin.setting.get-value-field');
+});

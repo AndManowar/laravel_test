@@ -8,7 +8,7 @@
     <div class="main-menu-content ps-container ps-theme-light ps-active-y" data-ps-id="38b32f2c-2722-81cd-21ed-a78157ecc558" style="height: 756px;">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
             <li class=" nav-item"><a href="{{route('admin.handbooks')}}"><i class="icon-document-text"></i><span class="menu-title">Справочники</span></a></li>
-            <li class=" nav-item"><a href=""><i class="icon-document-text"></i><span class="menu-title">Настройки</span></a></li>
+            <li class=" nav-item"><a href="{{route('admin.settings')}}"><i class="icon-document-text"></i><span class="menu-title">Настройки</span></a></li>
             <li class="nav-item has-sub"><a href="#"><i class="icon-ios-albums-outline"></i><span data-i18n="nav.cards.main" class="menu-title">RBAC</span></a>
                 <ul class="menu-content">
                     <li><a href="" data-i18n="nav.cards.card_bootstrap" class="menu-item">Bootstrap Cards</a>

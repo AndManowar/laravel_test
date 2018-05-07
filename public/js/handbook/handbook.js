@@ -10,7 +10,6 @@ $(document).ready(function () {
             data: {index: $('.additional_body').size()},
             success: function (data) {
                 $(data).appendTo('.additional_handbook_fields_div');
-                // $("#handbook_form").load();
             }
         });
     });
