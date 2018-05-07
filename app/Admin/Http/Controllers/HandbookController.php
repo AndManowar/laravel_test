@@ -69,7 +69,7 @@ class HandbookController extends Controller
 
             flash('Справочник создан')->success();
 
-            return response()->json(['url' => url('/admin/handbook/show-data/'.$this->handbookService->getId())]);
+            return response()->json(['url' => url('/admin/handbook/show-data/' . $this->handbookService->getId())]);
         }
 
         throw new BadRequestHttpException();
@@ -85,7 +85,7 @@ class HandbookController extends Controller
     {
         return view('admin.handbook.form', [
             'handbook'      => $this->handbookService->getHandbook($id),
-            'handbooksList' => HandbookFacade::getList(),
+            'handbooksList' => HandbookFacade::getList($id ? $id : null),
             'fieldTypes'    => FieldTypeHelper::getTitlesForDropdown(),
         ]);
     }
@@ -104,7 +104,7 @@ class HandbookController extends Controller
 
             flash('Справочник изменен')->success();
 
-            return response()->json(['url' => route('admin.handbooks')]);
+            return response()->json(['url' => url('/admin/handbook/show-data/' . $id)]);
         }
 
         throw new BadRequestHttpException();

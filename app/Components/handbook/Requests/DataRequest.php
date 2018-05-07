@@ -8,9 +8,9 @@
 
 namespace App\Components\handbook\Requests;
 
-use App\Components\handbook\Helpers\FieldTypeHelper;
-use App\Components\handbook\Models\Handbook;
 use App\Http\Requests\Request;
+use App\Components\handbook\Models\Handbook;
+use App\Components\handbook\Helpers\FieldTypeHelper;
 
 /**
  * Class DataRequest
@@ -27,7 +27,6 @@ class DataRequest extends Request
      * @var array
      */
     private $data;
-
 
     /**
      * Init current handbook to validate additional fields
@@ -48,7 +47,7 @@ class DataRequest extends Request
     {
         $rules = [
             'data.*.title'   => 'required',
-            'data.*.data_id' => 'required|integer|unique_id:'.$this->getDataIdValues(),
+            'data.*.data_id' => 'required|integer|unique_id:' . $this->getDataIdValues(),
             'data.*.value'   => 'required',
         ];
 
@@ -63,6 +62,7 @@ class DataRequest extends Request
         $messages = [
             'data.*.data_id.required'  => 'Поле обязательно к заполнению.',
             'data.*.data_id.unique_id' => 'Поле должно быть уникальным.',
+            'data.*.data_id.integer'   => 'Поле должно быть целым числом.',
             'data.*.title.required'    => 'Поле обязательно к заполнению.',
             'data.*.value.required'    => 'Поле обязательно к заполнению.',
             'data.*.title.min'         => 'Длина не может быть меньше :min.',

@@ -66,11 +66,17 @@ class Handbook implements HandbookInterface
     /**
      * Get handbooks list for dropdown
      *
+     * @param null|integer $id
      * @return array|\Illuminate\Support\Collection
      */
-    public function getList()
+    public function getList($id = null)
     {
-        return HandbookModel::all()->pluck('systemName', 'id')->all();
+        if ($id == null) {
+
+            return HandbookModel::all()->pluck('systemName', 'id')->all();
+        }
+
+        return HandbookModel::all()->where('id', '!=', $id)->pluck('systemName', 'id')->all();
     }
 
     /**
