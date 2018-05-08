@@ -11,7 +11,7 @@
  * @var array $fieldsTypes
  */
 
-$route = $setting->exists ? url('/admin/setting/update/' . $setting->id) : route('admin.setting.create');
+$route = $setting->exists ? route('admin.setting.update', ['id' => $setting->id]) : route('admin.setting.create');
 ?>
 @extends('layouts.admin.main')
 @section('content')

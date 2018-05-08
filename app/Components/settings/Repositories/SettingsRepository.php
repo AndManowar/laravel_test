@@ -24,11 +24,7 @@ class SettingsRepository
      */
     public function getSetting($id = null)
     {
-        if ($id != null) {
-            return Setting::findOrFail($id);
-        }
-
-        return new Setting();
+        return Setting::query()->findOrNew($id);
     }
 
     /**

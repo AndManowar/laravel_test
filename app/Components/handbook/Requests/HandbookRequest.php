@@ -27,10 +27,10 @@ class HandbookRequest extends Request
         ];
 
         if ($this->input('additionalFields')) {
-            $rules['additionalFields.*.name'] = ['required', 'string', 'min:5'];
-            $rules['additionalFields.*.description'] = ['required', 'string', 'min:5'];
-            $rules['additionalFields.*.type'] = ['required', 'integer'];
-            $rules['additionalFields.*.is_required'] = ['boolean'];
+            $rules['additionalFields.*.name'] = 'required|string|min:5';
+            $rules['additionalFields.*.description'] = 'required|string|min:5';
+            $rules['additionalFields.*.type'] = 'required|integer';
+            $rules['additionalFields.*.is_required'] = 'boolean';
         }
 
         return $rules;

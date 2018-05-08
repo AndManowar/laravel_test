@@ -42,7 +42,7 @@
   array (
     'providers' => 
     array (
-      0 => 'Leantony\\Grid\\Providers\\ServiceProvider',
+      0 => 'Leantony\\Grid\\Providers\\GridServiceProvider',
     ),
   ),
   'nunomaduro/collision' => 
@@ -50,6 +50,13 @@
     'providers' => 
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    ),
+  ),
+  'yaroslavmolchan/rbac' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'YaroslavMolchan\\Rbac\\RbacServiceProvider',
     ),
   ),
 );

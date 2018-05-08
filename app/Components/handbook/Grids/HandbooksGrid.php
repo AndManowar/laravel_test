@@ -131,7 +131,7 @@ class HandbooksGrid extends Grid
 
         $this->makeCustomButton([
             'name' => '+',
-            'url'  => url('/admin/handbook/form'),
+            'url'  => route('admin.handbook.form'),
         ], 'toolbar');
 
         $this->makeCustomButton([
@@ -152,4 +152,9 @@ class HandbooksGrid extends Grid
             return "";
         };
     }
+
+    /**
+     *
+     */
+    public static function getToolbarSize(){}
 }

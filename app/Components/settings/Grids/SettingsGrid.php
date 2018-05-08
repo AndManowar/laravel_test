@@ -145,7 +145,7 @@ class SettingsGrid extends Grid
 
         $this->makeCustomButton([
             'name' => '+',
-            'url'  => url('/admin/setting/form'),
+            'url'  => route('admin.setting.form'),
         ], 'toolbar');
     }
 
@@ -161,4 +161,9 @@ class SettingsGrid extends Grid
             return "";
         };
     }
+
+    /**
+     *
+     */
+    public static function getToolbarSize(){}
 }

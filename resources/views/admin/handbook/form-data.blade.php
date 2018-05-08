@@ -11,7 +11,7 @@
  * @var array $handbookData
  * @var array $relatedData
  */
-$route = url('/admin/handbook/save-data/' . $handbook->id);?>
+$route = route('admin.handbook.save-data', ['id' => $handbook->id]);?>
 @extends('layouts.admin.main')
 @section('content')
     <div class="col-md-12">
@@ -32,7 +32,8 @@ $route = url('/admin/handbook/save-data/' . $handbook->id);?>
                                         class="submit_data_btn btn btn-primary <?= empty($handbookData) ? 'hidden' : '' ?>">
                                     <i class="icon-check2"></i> Сохранить
                                 </button>
-                                <a href="{{url('/admin/handbook/form/'.$handbook->id)}}" class="btn btn-success">Структура
+                                <a href="{{route('admin.handbook.form', ['id' => $handbook->id])}}"
+                                   class="btn btn-success">Структура
                                     справочника</a>
                                 <a href="" class="btn btn-success pull-right add_new_data_field"><i
                                             class="icon-plus4"></i></a>
@@ -45,7 +46,7 @@ $route = url('/admin/handbook/save-data/' . $handbook->id);?>
                                         'index' => $index,
                                         'data' => $dataItem,
                                         'relatedData' => $relatedData,
-                                        'additionalFields' => (new \App\Components\handbook\Services\HandbookService())
+                                        'additionalFields' => (new \App\Components\handbook\Repositories\HandbookRepository())
                                         ->getAdditionalFields($handbook, $index, (array)$dataItem->getDecodedData())
                                         ])
                                     @endphp

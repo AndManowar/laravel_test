@@ -14,7 +14,7 @@ use App\Components\handbook\Models\Handbook;
 use App\Components\handbook\Grids\HandbooksGrid;
 use App\Components\handbook\Requests\DataRequest;
 use App\Components\handbook\Helpers\FieldTypeHelper;
-use App\Components\handbook\Services\HandbookService;
+use App\Components\handbook\Repositories\HandbookRepository;
 use App\Admin\Components\handbook\Requests\HandbookRequest;
 use \Illuminate\Support\Facades\Request as RequestFacade;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -27,23 +27,23 @@ use \App\Components\handbook\Facades\Handbook as HandbookFacade;
 class HandbookController extends Controller
 {
     /**
-     * @var HandbookService
+     * @var HandbookRepository
      */
-    private $handbookService;
+    private $handbookRepository;
 
     /**
      * HandbookController constructor.
-     * @param HandbookService $handbookService
+     * @param HandbookRepository $handbookRepository
      */
-    public function __construct(HandbookService $handbookService)
+    public function __construct(HandbookRepository $handbookRepository)
     {
         $this->middleware('ajax', ['except' => ['index', 'form', 'delete', 'showData', 'refreshCache']]);
 
-        $this->handbookService = $handbookService;
+        $this->handbookRepository = $handbookRepository;
     }
 
     /**
-     * Handbooks
+     * Handbooks list
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
@@ -65,11 +65,13 @@ class HandbookController extends Controller
      */
     public function create(HandbookRequest $handbookRequest)
     {
-        if ($this->handbookService->create($handbookRequest->all())) {
+        if ($this->handbookRepository->create($handbookRequest->all())) {
 
             flash('Справочник создан')->success();
 
-            return response()->json(['url' => url('/admin/handbook/show-data/' . $this->handbookService->getId())]);
+            return response()->json([
+                'url' => route('admin.handbook.show-data', ['id' => $this->handbookRepository->getId()])
+            ]);
         }
 
         throw new BadRequestHttpException();
@@ -84,7 +86,7 @@ class HandbookController extends Controller
     public function form($id = null)
     {
         return view('admin.handbook.form', [
-            'handbook'      => $this->handbookService->getHandbook($id),
+            'handbook'      => $this->handbookRepository->getHandbook($id),
             'handbooksList' => HandbookFacade::getList($id ? $id : null),
             'fieldTypes'    => FieldTypeHelper::getTitlesForDropdown(),
         ]);
@@ -100,11 +102,11 @@ class HandbookController extends Controller
      */
     public function update($id, HandbookRequest $handbookRequest)
     {
-        if ($this->handbookService->update($id, $handbookRequest->all())) {
+        if ($this->handbookRepository->update($id, $handbookRequest->all())) {
 
             flash('Справочник изменен')->success();
 
-            return response()->json(['url' => url('/admin/handbook/show-data/' . $id)]);
+            return response()->json(['url' => route('admin.handbook.show-data', ['id' => $id])]);
         }
 
         throw new BadRequestHttpException();
@@ -119,7 +121,7 @@ class HandbookController extends Controller
      */
     public function delete($id)
     {
-        if ($this->handbookService->delete($id)) {
+        if ($this->handbookRepository->delete($id)) {
             flash('Справочник удален')->warning();
         } else {
             flash('Невозможно удалить справочник т.к. он является родителем одного из справочников')->error();
@@ -136,12 +138,12 @@ class HandbookController extends Controller
      */
     public function showData($id)
     {
-        $handbook = $this->handbookService->getHandbook($id);
+        $handbook = $this->handbookRepository->getHandbook($id);
 
         return view('admin.handbook.form-data', [
             'handbook'     => $handbook,
             'handbookData' => $handbook->handbookData->all(),
-            'relatedData'  => $this->handbookService->getRelatedData($handbook),
+            'relatedData'  => $this->handbookRepository->getRelatedData($handbook),
         ]);
     }
 
@@ -154,7 +156,7 @@ class HandbookController extends Controller
      */
     public function saveData(DataRequest $dataRequest)
     {
-        if ($this->handbookService->saveData($dataRequest->all())) {
+        if ($this->handbookRepository->saveData($dataRequest->all())) {
 
             flash('Данные справочника сохранены')->success();
 
@@ -169,18 +171,19 @@ class HandbookController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws BadRequestHttpException
+     * @throws \Exception
      */
     public function deleteDataItem()
     {
-        if ($this->handbookService->deleteDataRecord(RequestFacade::get('id'))) {
+        if ($this->handbookRepository->deleteDataRecord(RequestFacade::get('id'))) {
             return response()->json();
         }
 
-        return response()->json(['message' => $this->handbookService->getErrors()], 500);
+        return response()->json(['message' => $this->handbookRepository->getErrors()], 500);
     }
 
     /**
-     * Дополнительное поле формы структуры справочника
+     * Additional field for handbook structure
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Throwable
@@ -195,20 +198,20 @@ class HandbookController extends Controller
     }
 
     /**
-     * Форма записи справочника
+     * Handbook data form
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function addNewDataField()
     {
         $index = RequestFacade::get('index');
-        $handbook = $this->handbookService->getHandbook(RequestFacade::get('id'));
+        $handbook = $this->handbookRepository->getHandbook(RequestFacade::get('id'));
 
         return view('admin.handbook.single-data-form', [
             'index'            => $index,
             'handbook'         => $handbook,
-            'relatedData'      => $this->handbookService->getRelatedData($handbook),
-            'additionalFields' => $this->handbookService->getAdditionalFields($handbook, $index),
+            'relatedData'      => $this->handbookRepository->getRelatedData($handbook),
+            'additionalFields' => $this->handbookRepository->getAdditionalFields($handbook, $index),
             'data'             => null,
         ]);
     }

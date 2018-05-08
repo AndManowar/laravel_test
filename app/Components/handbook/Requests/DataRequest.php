@@ -33,10 +33,9 @@ class DataRequest extends Request
      */
     protected function before()
     {
-        if (isset($this->all()['data'])) {
+        if ($this->data = $this->get('data')) {
 
-            $this->handbook = Handbook::findOrFail(array_pop($this->all()['data'])['handbook_id']);
-            $this->data = $this->all()['data'];
+            $this->handbook = Handbook::query()->findOrFail(array_pop($this->data)['handbook_id']);
         }
     }
 

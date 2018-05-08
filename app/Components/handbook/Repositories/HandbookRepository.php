@@ -6,7 +6,7 @@
  * Time: 13:29
  */
 
-namespace App\Components\handbook\Services;
+namespace App\Components\handbook\Repositories;
 
 use App\Components\handbook\Helpers\FieldTypeHelper;
 use App\Components\handbook\Models\Handbook;
@@ -15,9 +15,9 @@ use Exception;
 
 /**
  * Class HandbookService
- * @package App\Components\handbook\Services
+ * @package App\Components\handbook\Repositories
  */
-class HandbookService
+class HandbookRepository
 {
     /**
      * Id of newly created handbook object
@@ -39,13 +39,13 @@ class HandbookService
      * @param integer|null $id
      * @return Handbook|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    public function getHandbook($id)
+    public function getHandbook($id = null)
     {
         if ($id == null) {
             return new Handbook();
         }
         /** @var Handbook $handbook */
-        $handbook = Handbook::findOrFail($id);
+        $handbook = Handbook::query()->findOrFail($id);
         $handbook->additionalFields = $handbook->getDecodedFields();
 
         return $handbook;
@@ -59,7 +59,7 @@ class HandbookService
      */
     public function create($attributes)
     {
-        $handbook = $this->getHandbook(null);
+        $handbook = $this->getHandbook();
         $handbook->fill($attributes);
         $handbook->encodeFields();
 
@@ -85,11 +85,7 @@ class HandbookService
         $handbook->fill($attributes);
         $handbook->encodeFields();
 
-        if (!$handbook->save()) {
-            return false;
-        }
-
-        return true;
+        return $handbook->save();
     }
 
     /**
@@ -102,7 +98,7 @@ class HandbookService
     public function delete($id)
     {
         /** @var Handbook $handbook */
-        $handbook = Handbook::findOrFail($id);
+        $handbook = Handbook::query()->findOrFail($id);
 
         if (Handbook::query()->where(['relation' => $handbook->id])->exists()) {
             return false;
@@ -167,6 +163,10 @@ class HandbookService
      */
     public function saveData(array $data)
     {
+        if(!isset($data['data'])){
+            return false;
+        }
+
         foreach ($data['data'] as $id => $data_item) {
 
             $handbookData = $this->getDataObject($data_item['handbook_id'], $data_item['data_id']);
@@ -206,25 +206,16 @@ class HandbookService
     }
 
     /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Delete handbookData object
      *
      * @param integer $id
      * @return bool|null
+     * @throws Exception
      */
     public function deleteDataRecord($id)
     {
         /** @var HandbookData $dataItem */
-        $dataItem = HandbookData::findOrFail($id);
+        $dataItem = HandbookData::query()->findOrFail($id);
 
         // Если данное значение справочника указано где-то как родительское - нельзя удалять
         if (HandbookData::query()
@@ -249,8 +240,7 @@ class HandbookService
      */
     private function addError($errorMessage)
     {
-        $this->errors = [];
-        array_push($this->errors, $errorMessage);
+        $this->errors[] = $errorMessage;
     }
 
     /**
@@ -261,5 +251,15 @@ class HandbookService
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

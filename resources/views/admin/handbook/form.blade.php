@@ -12,7 +12,7 @@
  * @var array $fieldTypes
  */
 
-$route = $handbook->exists ? url('/admin/handbook/update/' . $handbook->id) : route('admin.handbook.create');
+$route = $handbook->exists ? route('admin.handbook.update', ['id' => $handbook->id]) : route('admin.handbook.create');
 ?>
 @extends('layouts.admin.main')
 @section('content')

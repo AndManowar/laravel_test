@@ -9,7 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Components\handbook\Helpers\FieldTypeHelper;
-use App\Components\handbook\Services\HandbookService;
+use App\Components\handbook\Repositories\HandbookRepository;
 use Request;
 
 /**
