@@ -10,15 +10,15 @@ namespace App\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Components\handbook\Models\Handbook;
-use App\Components\handbook\Grids\HandbooksGrid;
-use App\Components\handbook\Requests\DataRequest;
-use App\Components\handbook\Helpers\FieldTypeHelper;
-use App\Components\handbook\Repositories\HandbookRepository;
-use App\Admin\Components\handbook\Requests\HandbookRequest;
+use App\Components\Handbook\Models\Handbook;
+use App\Components\Handbook\Grids\HandbooksGrid;
+use App\Components\Handbook\Requests\DataRequest;
+use App\Components\Handbook\Helpers\FieldTypeHelper;
+use App\Components\Handbook\Repositories\HandbookRepository;
+use App\Components\Handbook\Requests\HandbookRequest;
 use \Illuminate\Support\Facades\Request as RequestFacade;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use \App\Components\handbook\Facades\Handbook as HandbookFacade;
+use \App\Components\Handbook\Facades\Handbook as HandbookFacade;
 
 /**
  * Class HandbookController

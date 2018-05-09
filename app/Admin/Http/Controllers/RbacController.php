@@ -8,10 +8,11 @@
 
 namespace App\Admin\Http\Controllers;
 
-use App\Components\rbac\Repositories\RbacRepository;
-use App\Components\rbac\Requests\PermissionGroupRequest;
-use App\Components\rbac\Requests\PermissionRequest;
-use App\Components\rbac\Requests\RoleRequest;
+use App\Components\Rbac\Repositories\RbacRepository;
+use Request;
+use App\Components\Rbac\Facades\RbacFacade;
+use App\Components\Rbac\Requests\PermissionGroupRequest;
+use App\Components\Rbac\Requests\RoleRequest;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use YaroslavMolchan\Rbac\Models\Permission;
@@ -25,7 +26,7 @@ use YaroslavMolchan\Rbac\Models\Role;
 class RbacController extends Controller
 {
     /**
-     * @var RbacService
+     * @var RbacRepository
      */
     private $rbacRepository;
 
@@ -35,6 +36,12 @@ class RbacController extends Controller
      */
     public function __construct(RbacRepository $rbacRepository)
     {
+        $this->middleware('ajax', ['only' => [
+            'changeRoleGroup',
+            'addPermissionsToGroups',
+            'deleteFromGroup',
+        ]]);
+
         $this->rbacRepository = $rbacRepository;
     }
 
@@ -45,7 +52,11 @@ class RbacController extends Controller
      */
     public function index()
     {
-        return view('admin.rbac.index');
+        return view('admin.rbac.index', [
+            'roles'            => Role::query()->get()->all(),
+            'permissions'      => Permission::query()->get()->all(),
+            'permissionGroups' => PermissionGroup::query()->get()->all(),
+        ]);
     }
 
     /**
@@ -57,7 +68,7 @@ class RbacController extends Controller
     public function role($id = null)
     {
         return view('admin.rbac.role.form', [
-            'role' => $this->rbacRepository->getRbacModel(Role::class, $id)
+            'role' => $this->rbacRepository->getRbacModel(Role::class, $id),
         ]);
     }
 
@@ -119,76 +130,6 @@ class RbacController extends Controller
     }
 
     /**
-     * Show Permission create/edit form
-     *
-     * @param null|integer $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function permission($id = null)
-    {
-        return view('admin.rbac.permission.form', [
-            'permission' => $this->rbacRepository->getRbacModel(Permission::class, $id)
-        ]);
-    }
-
-    /**
-     * Create permission
-     *
-     * @param PermissionRequest $permissionRequest
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws BadRequestHttpException
-     */
-    public function createPermission(PermissionRequest $permissionRequest)
-    {
-        if ($this->rbacRepository->createRbacModel($permissionRequest->all(), Permission::class)) {
-
-            flash('Разрешение создано')->success();
-
-            return redirect(route('admin.rbac.index'));
-        }
-
-        throw new BadRequestHttpException();
-    }
-
-    /**
-     * Update permission
-     *
-     * @param integer $id
-     * @param PermissionRequest $permissionRequest
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws BadRequestHttpException
-     */
-    public function updatePermission($id, PermissionRequest $permissionRequest)
-    {
-        if ($this->rbacRepository->updateRbacModel($id, $permissionRequest->all(), Permission::class)) {
-
-            flash('Разрешение обновлено')->warning();
-
-            return redirect(route('admin.rbac.index'));
-        }
-
-        throw new BadRequestHttpException();
-    }
-
-    /**
-     * Delete permission
-     *
-     * @param integer $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Exception
-     */
-    public function deletePermission($id)
-    {
-        if ($this->rbacRepository->deleteRbacModel($id, Permission::class)) {
-            flash('Разрешение удалено')->warning();
-        } else {
-            flash('Невозможно удалить разрешение')->error();
-        }
-
-        return redirect(route('admin.rbac.index'));
-    }
-
-    /**
      * Show PermissionGroup create/edit form
      *
      * @param null|integer $id
@@ -197,7 +138,7 @@ class RbacController extends Controller
     public function permissionGroup($id = null)
     {
         return view('admin.rbac.permissionGroup.form', [
-            'permissionGroup' => $this->rbacRepository->getRbacModel(PermissionGroup::class, $id)
+            'permissionGroup' => $this->rbacRepository->getRbacModel(PermissionGroup::class, $id),
         ]);
     }
 
@@ -234,7 +175,8 @@ class RbacController extends Controller
 
             flash('Группа разрешений обновлена')->warning();
 
-            return redirect(route('admin.rbac.index'));        }
+            return redirect(route('admin.rbac.index'));
+        }
 
         throw new BadRequestHttpException();
     }
@@ -255,5 +197,67 @@ class RbacController extends Controller
         }
 
         return redirect(route('admin.rbac.index'));
+    }
+
+    /**
+     * Change role group
+     */
+    public function changeRoleGroup()
+    {
+        RbacFacade::changeRoleGroup(
+            Request::get('roleId'),
+            Request::get('groupId'),
+            Request::get('checked')
+        );
+    }
+
+    /**
+     * Get routes without permissions
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getRoutesWithoutPermissions()
+    {
+        return view('admin.rbac.set-permissions-form', [
+            'routes'           => RbacFacade::getRoutesWithoutPermissions(),
+            'permissionGroups' => $this->rbacRepository->getPermissionGroupList(),
+        ]);
+    }
+
+    /**
+     * Add permissions to group
+     */
+    public function addPermissionsToGroups()
+    {
+        RbacFacade::setPermissionToGroup(
+            Request::get('groupId'),
+            Request::get('permissionName'),
+            $this->rbacRepository);
+    }
+
+    /**
+     * Get permissions list by group
+     *
+     * @param integer $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showPermissionsByGroup($id)
+    {
+        $permissionGroup = $this->rbacRepository->getRbacModel(PermissionGroup::class, $id);
+
+        return view('admin.rbac.permissionGroup.permissions', [
+            'permissionGroup' => $permissionGroup,
+            'permissions'     => $permissionGroup->permissions()->get()->all(),
+        ]);
+    }
+
+    /**
+     * Remove Permission from Group
+     *
+     * @return  void
+     */
+    public function deleteFromGroup()
+    {
+        $this->rbacRepository->deleteRbacModel(Request::get('id'), Permission::class);
     }
 }

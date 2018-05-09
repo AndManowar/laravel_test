@@ -35,7 +35,14 @@ $route = $permissionGroup->exists ? route('admin.rbac.permission-group.update', 
                                                placeholder="Системное название" name="name"
                                                value="{{old('name') ? old('name') : $permissionGroup->name}}">
                                         <span class="help-block">
-                                            </span>
+                                        <strong>
+                                                @php
+                                                    if ($errors->has('name')) {
+                                                        echo $errors->first('name');
+                                                    }
+                                                @endphp
+                                        </strong>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -46,7 +53,14 @@ $route = $permissionGroup->exists ? route('admin.rbac.permission-group.update', 
                                                placeholder="Модуль" name="module"
                                                value="{{old('module') ? old('module') : $permissionGroup->module}}">
                                         <span class="help-block">
-                                                </span>
+                                        <strong>
+                                                @php
+                                                    if ($errors->has('module')) {
+                                                        echo $errors->first('module');
+                                                    }
+                                                @endphp
+                                        </strong>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

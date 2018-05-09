@@ -7,7 +7,7 @@
  */
 
 /**
- * @var \App\Components\handbook\Models\Handbook $handbook
+ * @var \App\Components\Handbook\Models\Handbook $handbook
  * @var array $handbookData
  * @var array $relatedData
  */
@@ -46,7 +46,7 @@ $route = route('admin.handbook.save-data', ['id' => $handbook->id]);?>
                                         'index' => $index,
                                         'data' => $dataItem,
                                         'relatedData' => $relatedData,
-                                        'additionalFields' => (new \App\Components\handbook\Repositories\HandbookRepository())
+                                        'additionalFields' => (new \App\Components\Handbook\Repositories\HandbookRepository())
                                         ->getAdditionalFields($handbook, $index, (array)$dataItem->getDecodedData())
                                         ])
                                     @endphp

@@ -48,68 +48,13 @@
                 <hr>
                 <!-- end search form -->
                 <!-- filter form declaration -->
-                <form action="{{ $grid->getSearchRoute() }}" method="GET" id="{{ $grid->getFilterFormId() }}"></form>
+                <form action="" method="GET" id="{{ $grid->getFilterFormId() }}"></form>
                 <!-- grid contents -->
                 <div class="table-responsive">
                     <table class="{{ $grid->getClass() }}">
                         <thead>
                         <!-- headers -->
-                        <tr>
-                            @foreach($columns as $column)
 
-                                @if($loop->first)
-
-                                    @if($sort = $column->sortable)
-                                        @if(is_callable($grid->getSortUrl()))
-                                            <th scope="col" class="{{ is_callable($column->columnClass) ? call_user_func($column->columnClass) : $column->columnClass }}"
-                                                title="click to sort by {{ $column->key }}">
-                                                <a data-trigger-pjax="1" class="data-sort"
-                                                   href="{{ call_user_func($grid->getSortUrl(), $column->key) }}">
-                                                    {{ $column->name }}
-                                                </a>
-                                            </th>
-                                        @else
-                                            <th scope="col" class="{{ is_callable($column->columnClass) ? call_user_func($column->columnClass) : $column->columnClass }}"
-                                                title="click to sort by {{ $column->key }}">
-                                                <a data-trigger-pjax="1" class="data-sort"
-                                                   href="{{ route($grid->getSortUrl(), add_query_param([$this->getSortParam() => $column->key])) }}">
-                                                    {{ $column->name }}
-                                                </a>
-                                            </th>
-                                        @endif
-                                    @else
-                                        <th class="{{ is_callable($column->columnClass) ? call_user_func($column->columnClass) : $column->columnClass }}">
-                                            {{ $column->name }}
-                                        </th>
-                                    @endif
-                                @else
-                                    @if($sort = $column->sortable)
-                                        @if(is_callable($grid->getSortUrl()))
-                                            <th scope="col" title="click to sort by {{ $column->key }}"
-                                                class="{{ is_callable($column->columnClass) ? call_user_func($column->columnClass) : $column->columnClass }}">
-                                                <a data-trigger-pjax="1" class="data-sort"
-                                                   href="{{ call_user_func($grid->getSortUrl(), $column->key) }}">
-                                                    {{ $column->name }}
-                                                </a>
-                                            </th>
-                                        @else
-                                            <th scope="col" title="click to sort by {{ $column->key }}"
-                                                class="{{ is_callable($column->columnClass) ? call_user_func($column->columnClass) : $column->columnClass }}">
-                                                <a data-trigger-pjax="1" class="data-sort"
-                                                   href="{{ route($grid->getSortUrl(), add_query_param([$this->getSortParam() => $column->key])) }}">
-                                                    {{ $column->name }}
-                                                </a>
-                                            </th>
-                                        @endif
-                                    @else
-                                        <th scope="col" class="{{ is_callable($column->columnClass) ? call_user_func($column->columnClass) : $column->columnClass }}">
-                                            {{ $column->name }}
-                                        </th>
-                                    @endif
-                                @endif
-                            @endforeach
-                            <th></th>
-                        </tr>
                         <!-- end headers -->
                         <!-- filters -->
                         <tr>

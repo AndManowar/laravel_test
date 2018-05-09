@@ -61,7 +61,7 @@ class Kernel extends HttpKernel
         'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'ajax'          => \App\Components\handbook\Middleware\AjaxMiddleware::class,
+        'ajax'          => \App\Components\Handbook\Middleware\AjaxMiddleware::class,
         'role' => \YaroslavMolchan\Rbac\Middleware\CheckRole::class,
         'permission' => \YaroslavMolchan\Rbac\Middleware\CheckPermission::class
     ];

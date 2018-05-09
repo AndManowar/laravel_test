@@ -151,11 +151,12 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
-        \App\Components\handbook\Providers\HandbookServiceProvider::class,
-        \App\Components\settings\Providers\SettingsServiceProvider::class,
+        \App\Components\Handbook\Providers\HandbookServiceProvider::class,
+        \App\Components\Settings\Providers\SettingsServiceProvider::class,
+        \App\Components\Rbac\Providers\RbacServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         YaroslavMolchan\Rbac\RbacServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -218,8 +219,9 @@ return [
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
-        'Handbook'     => \App\Components\handbook\Facades\Handbook::class,
-        'Settings'     => \App\Components\settings\Facades\Settings::class
+        'Handbook'     => \App\Components\Handbook\Facades\Handbook::class,
+        'Settings'     => \App\Components\Settings\Facades\Settings::class,
+        'Rbac'         => \App\Components\Rbac\Facades\RbacFacade::class,
     ],
 
 ];

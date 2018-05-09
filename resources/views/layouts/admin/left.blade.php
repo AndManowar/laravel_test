@@ -11,9 +11,9 @@
             <li class=" nav-item"><a href="{{route('admin.settings')}}"><i class="icon-document-text"></i><span class="menu-title">Настройки</span></a></li>
             <li class="nav-item has-sub"><a href="#"><i class="icon-ios-albums-outline"></i><span data-i18n="nav.cards.main" class="menu-title">RBAC</span></a>
                 <ul class="menu-content">
-                    <li><a href="" data-i18n="nav.cards.card_bootstrap" class="menu-item">Bootstrap Cards</a>
+                    <li><a href="{{route('admin.rbac.index')}}" data-i18n="nav.cards.card_bootstrap" class="menu-item">Роли/Права/Разрешения</a>
                     </li>
-                    <li><a href="" data-i18n="nav.cards.card_actions" class="menu-item">Card Action</a>
+                    <li><a href="{{route('admin.rbac.routes')}}" data-i18n="nav.cards.card_actions" class="menu-item">Группы/Права</a>
                     </li>
                 </ul>
             </li>

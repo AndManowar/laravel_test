@@ -7,7 +7,7 @@
  */
 
 /**
- * @var \App\Components\settings\Models\Setting $setting
+ * @var \App\Components\Settings\Models\Setting $setting
  * @var array $fieldsTypes
  */
 
@@ -68,7 +68,7 @@ $route = $setting->exists ? route('admin.setting.update', ['id' => $setting->id]
 
                                 <div class="col-md-12 value_field">
                                     @if($setting->value)
-                                        @php echo \App\Components\settings\Helpers\FieldsTypeHelper::getFormField($setting->fieldType, $setting->value) @endphp
+                                        @php echo \App\Components\Settings\Helpers\FieldsTypeHelper::getFormField($setting->fieldType, $setting->value) @endphp
                                     @endif
                                 </div>
 

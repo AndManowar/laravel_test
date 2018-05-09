@@ -7,11 +7,11 @@
  */
 
 /**
- * @var \App\Components\handbook\Models\Handbook $handbook
+ * @var \App\Components\Handbook\Models\Handbook $handbook
  * @var integer $index
  * @var array $relatedData
  * @var array $additionalFields
- * @var \App\Components\handbook\Models\HandbookData $data
+ * @var \App\Components\Handbook\Models\HandbookData $data
  */
 ?>
 

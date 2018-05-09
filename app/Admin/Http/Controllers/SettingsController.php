@@ -8,11 +8,11 @@
 
 namespace App\Admin\Http\Controllers;
 
-use App\Components\settings\Grids\SettingsGrid;
-use App\Components\settings\Helpers\FieldsTypeHelper;
-use App\Components\settings\Models\Setting;
-use App\Components\settings\Repositories\SettingsRepository;
-use App\Components\settings\Requests\SettingRequest;
+use App\Components\Settings\Grids\SettingsGrid;
+use App\Components\Settings\Helpers\FieldsTypeHelper;
+use App\Components\Settings\Models\Setting;
+use App\Components\Settings\Repositories\SettingsRepository;
+use App\Components\Settings\Requests\SettingRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -108,6 +108,7 @@ class SettingsController extends Controller
      * Delete setting
      *
      * @param integer $id
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
     public function delete($id)
@@ -117,6 +118,8 @@ class SettingsController extends Controller
         } else {
             flash('Невозможно удалить настройку')->error();
         }
+
+        return redirect()->back();
     }
 
     /**

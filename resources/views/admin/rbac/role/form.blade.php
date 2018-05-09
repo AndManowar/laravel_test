@@ -35,6 +35,13 @@ $route = $role->exists ? route('admin.rbac.role.update', ['id' => $role->getKey(
                                                placeholder="Системное название" name="name"
                                                value="{{old('name') ? old('name') : $role->name}}">
                                         <span class="help-block">
+                                            <strong>
+                                                @php
+                                                    if ($errors->has('name')) {
+                                                        echo $errors->first('name');
+                                                    }
+                                                @endphp
+                                            </strong>
                                             </span>
                                     </div>
                                 </div>
@@ -46,7 +53,14 @@ $route = $role->exists ? route('admin.rbac.role.update', ['id' => $role->getKey(
                                                placeholder="Slug" name="slug"
                                                value="{{old('slug') ? old('slug') : $role->slug}}">
                                         <span class="help-block">
-                                                </span>
+                                        <strong>
+                                                @php
+                                                    if ($errors->has('slug')) {
+                                                        echo $errors->first('slug');
+                                                    }
+                                                @endphp
+                                        </strong>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

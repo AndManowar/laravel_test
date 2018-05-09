@@ -30,12 +30,16 @@ Route::group(['prefix' => 'setting'], function () {
     Route::post('/update/{id}', 'SettingsController@update')->name('admin.setting.update');
     Route::get('/form/{id?}', 'SettingsController@form')->name('admin.setting.form');
     Route::get('/get-value-field', 'SettingsController@getValueField')->name('admin.setting.get-value-field');
-    Route::get('/delete', 'SettingsController@delete')->name('admin.setting.delete');
+    Route::get('/delete/{id}', 'SettingsController@delete')->name('admin.setting.delete');
 });
 
 Route::group(['prefix' => 'rbac'], function () {
 
     Route::get('', 'RbacController@index')->name('admin.rbac.index');
+    Route::get('change-role-group', 'RbacController@changeRoleGroup')->name('admin.rbac.change-role-group');
+    Route::get('/set-permissions', 'RbacController@addPermissionsToGroups')->name('admin.rbac.set-permissions');
+    Route::get('/routes', 'RbacController@getRoutesWithoutPermissions')->name('admin.rbac.routes');
+
 
     Route::group(['prefix' => 'role'], function () {
         Route::post('/create', 'RbacController@createRole')->name('admin.rbac.role.create');
@@ -44,18 +48,13 @@ Route::group(['prefix' => 'rbac'], function () {
         Route::get('/{id?}', 'RbacController@role')->name('admin.rbac.role');
     });
 
-    Route::group(['prefix' => 'permission'], function () {
-        Route::post('/create', 'RbacController@createPermission')->name('admin.rbac.permission.create');
-        Route::post('/update/{id}', 'RbacController@updatePermission')->name('admin.rbac.permission.update');
-        Route::get('/delete/{id}', 'RbacController@deletePermission')->name('admin.rbac.permission.delete');
-        Route::get('/{id?}', 'RbacController@permission')->name('admin.rbac.permission');
-    });
-
     Route::group(['prefix' => 'permission-group'], function () {
         Route::post('/create', 'RbacController@createPermissionGroup')->name('admin.rbac.permission-group.create');
         Route::post('/update/{id}', 'RbacController@updatePermissionGroup')->name('admin.rbac.permission-group.update');
         Route::get('/delete/{id}', 'RbacController@deletePermissionGroup')->name('admin.rbac.permission-group.delete');
-        Route::get('/{id?}', 'RbacController@permissionGroup')->name('admin.rbac.permission-group');
+        Route::get('/{id?}', 'RbacController@permissionGroup')->where('id', '[0-9]+')->name('admin.rbac.permission-group');
+        Route::get('/remove-permission', 'RbacController@deleteFromGroup')->name('admin.rbac.permission-group.remove-permission');
+        Route::get('/permissions/{id}', 'RbacController@showPermissionsByGroup')->name('admin.rbac.permission-group.permissions');
     });
 
 });

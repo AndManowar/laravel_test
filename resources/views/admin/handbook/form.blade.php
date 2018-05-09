@@ -7,7 +7,7 @@
  */
 
 /**
- * @var \App\Components\handbook\Models\Handbook $handbook
+ * @var \App\Components\Handbook\Models\Handbook $handbook
  * @var array $handbooksList
  * @var array $fieldTypes
  */
