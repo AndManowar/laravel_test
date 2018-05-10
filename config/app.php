@@ -155,7 +155,6 @@ return [
         \App\Components\Settings\Providers\SettingsServiceProvider::class,
         \App\Components\Rbac\Providers\RbacServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-        YaroslavMolchan\Rbac\RbacServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
         /*

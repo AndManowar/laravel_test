@@ -6,11 +6,18 @@
  *
  */
 
-Route::get('/dashboard', 'MainpageController@index')->name('admin.dashboard');
+Route::get('/dashboard', 'MainpageController@index')->name('admin.dashboard')->middleware('admin_rbac');
 
-Route::get('/handbooks', 'HandbookController@index')->name('admin.handbooks');
+Route::get('/handbooks', 'HandbookController@index')->name('admin.handbooks')->middleware('admin_rbac');
 
-Route::group(['prefix' => 'handbook'], function () {
+Route::get('/settings', 'SettingsController@index')->name('admin.settings')->middleware('admin_rbac');
+
+
+Route::get('/login/form', 'Auth\LoginController@showLoginForm')->name('admin.login.form');
+Route::get('/login', 'Auth\LoginController@login')->name('admin.login');
+Route::get('/logout', 'Auth\LoginController@logout')->name('admin.logout')->middleware('admin_rbac');
+
+Route::group(['prefix' => 'handbook', 'middleware' => ['admin_rbac']], function () {
     Route::post('/create', 'HandbookController@create')->name('admin.handbook.create');
     Route::post('/update/{id}', 'HandbookController@update')->name('admin.handbook.update');
     Route::get('/form/{id?}', 'HandbookController@form')->name('admin.handbook.form');
@@ -23,9 +30,8 @@ Route::group(['prefix' => 'handbook'], function () {
     Route::get('/refresh-cache', 'HandbookController@refreshCache')->name('admin.handbook.refresh-cache');
 });
 
-Route::get('/settings', 'SettingsController@index')->name('admin.settings');
 
-Route::group(['prefix' => 'setting'], function () {
+Route::group(['prefix' => 'setting', 'middleware' => ['admin_rbac']], function () {
     Route::post('/create', 'SettingsController@create')->name('admin.setting.create');
     Route::post('/update/{id}', 'SettingsController@update')->name('admin.setting.update');
     Route::get('/form/{id?}', 'SettingsController@form')->name('admin.setting.form');
@@ -33,7 +39,7 @@ Route::group(['prefix' => 'setting'], function () {
     Route::get('/delete/{id}', 'SettingsController@delete')->name('admin.setting.delete');
 });
 
-Route::group(['prefix' => 'rbac'], function () {
+Route::group(['prefix' => 'rbac', 'middleware' => ['admin_rbac']], function () {
 
     Route::get('', 'RbacController@index')->name('admin.rbac.index');
     Route::get('change-role-group', 'RbacController@changeRoleGroup')->name('admin.rbac.change-role-group');
@@ -41,14 +47,14 @@ Route::group(['prefix' => 'rbac'], function () {
     Route::get('/routes', 'RbacController@getRoutesWithoutPermissions')->name('admin.rbac.routes');
 
 
-    Route::group(['prefix' => 'role'], function () {
+    Route::group(['prefix' => 'role', 'middleware' => ['admin_rbac']], function () {
         Route::post('/create', 'RbacController@createRole')->name('admin.rbac.role.create');
         Route::post('/update/{id}', 'RbacController@updateRole')->name('admin.rbac.role.update');
         Route::get('/delete/{id}', 'RbacController@deleteRole')->name('admin.rbac.role.delete');
         Route::get('/{id?}', 'RbacController@role')->name('admin.rbac.role');
     });
 
-    Route::group(['prefix' => 'permission-group'], function () {
+    Route::group(['prefix' => 'permission-group', 'middleware' => ['admin_rbac']], function () {
         Route::post('/create', 'RbacController@createPermissionGroup')->name('admin.rbac.permission-group.create');
         Route::post('/update/{id}', 'RbacController@updatePermissionGroup')->name('admin.rbac.permission-group.update');
         Route::get('/delete/{id}', 'RbacController@deletePermissionGroup')->name('admin.rbac.permission-group.delete');

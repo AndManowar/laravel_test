@@ -7,7 +7,7 @@
  */
 
 /**
- * @var \YaroslavMolchan\Rbac\Models\Role $role
+ * @var \App\Components\Rbac\Models\Role $role
  */
 
 $route = $role->exists ? route('admin.rbac.role.update', ['id' => $role->getKey()]) : route('admin.rbac.role.create');

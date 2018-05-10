@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb280f222d669509e94e3c4cb72d1f8e",
+    "content-hash": "235ff9d5dc219036b943b5172225ffc6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -978,12 +978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leantony/laravel-grid.git",
-                "reference": "088007b1ae430045f88fff0a74f6922a1ba297dd"
+                "reference": "71255b1d5c815abf0ff04b0fbc4baef70be9d0f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leantony/laravel-grid/zipball/088007b1ae430045f88fff0a74f6922a1ba297dd",
-                "reference": "088007b1ae430045f88fff0a74f6922a1ba297dd",
+                "url": "https://api.github.com/repos/leantony/laravel-grid/zipball/71255b1d5c815abf0ff04b0fbc4baef70be9d0f2",
+                "reference": "71255b1d5c815abf0ff04b0fbc4baef70be9d0f2",
                 "shasum": ""
             },
             "require": {
@@ -1039,7 +1039,7 @@
                 "leantony",
                 "pjax"
             ],
-            "time": "2018-05-08T21:59:59+00:00"
+            "time": "2018-05-09T14:02:44+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2627,56 +2627,6 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
-        },
-        {
-            "name": "yaroslavmolchan/rbac",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/YaroslavMolchan/rbac.git",
-                "reference": "c46416e79d075811eaecbccf1e03ede0b6521346"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/YaroslavMolchan/rbac/zipball/c46416e79d075811eaecbccf1e03ede0b6521346",
-                "reference": "c46416e79d075811eaecbccf1e03ede0b6521346",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^5.3",
-                "php": ">=5.5.9"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "YaroslavMolchan\\Rbac\\RbacServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "YaroslavMolchan\\Rbac\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yaroslav Molchan",
-                    "email": "yaroslav.molchan@gmail.com",
-                    "homepage": "https://molchan.me"
-                }
-            ],
-            "description": "Simple RBAC/ACL for Laravel 5.5 and more with caching and permission groups.",
-            "keywords": [
-                "acl",
-                "laravel",
-                "rbac"
-            ],
-            "time": "2017-09-27T11:51:59+00:00"
         }
     ],
     "packages-dev": [

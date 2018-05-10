@@ -7,7 +7,7 @@
  */
 
 /**
- * @var \YaroslavMolchan\Rbac\Models\PermissionGroup $permissionGroup
+ * @var \App\Components\Rbac\Models\PermissionGroup $permissionGroup
  */
 
 $route = $permissionGroup->exists ? route('admin.rbac.permission-group.update', ['id' => $permissionGroup->getKey()]) : route('admin.rbac.permission-group.create');

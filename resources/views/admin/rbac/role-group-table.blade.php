@@ -7,8 +7,8 @@
  */
 
 /**
- * @var \YaroslavMolchan\Rbac\Models\Role[] $roles
- * @var \YaroslavMolchan\Rbac\Models\PermissionGroup[] $permissionGroups
+ * @var \App\Components\Rbac\Models\Role[] $roles
+ * @var \App\Components\Rbac\Models\PermissionGroup[] $permissionGroups
  */
 ?>
 

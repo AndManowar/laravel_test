@@ -7,9 +7,9 @@
  */
 
 /**
- * @var \YaroslavMolchan\Rbac\Models\Role[] $roles
- * @var \YaroslavMolchan\Rbac\Models\Permission[] $permissions
- * @var \YaroslavMolchan\Rbac\Models\PermissionGroup[] $permissionGroup
+ * @var \App\Components\Rbac\Models\Role[] $roles
+ * @var \App\Components\Rbac\Models\Permission[] $permissions
+ * @var \App\Components\Rbac\Models\PermissionGroup[] $permissionGroup
  */
 ?>
 @extends('layouts.admin.main')

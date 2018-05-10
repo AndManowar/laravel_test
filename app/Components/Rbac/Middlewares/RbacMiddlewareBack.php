@@ -9,6 +9,9 @@
 namespace App\Components\Rbac\Middlewares;
 
 use App\Components\Rbac\Facades\RbacFacade;
+use App\Components\Rbac\Models\Role;
+use App\Models\DB\User;
+use Auth;
 use Closure;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -16,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * Class RbacMiddleware
  * @package App\Components\Rbac\Middlewares
  */
-class RbacMiddleware
+class RbacMiddlewareBack
 {
     /**
      * Handle an incoming request.
@@ -32,8 +35,16 @@ class RbacMiddleware
             throw new BadRequestHttpException('GuestPermission Permission Group must be specified');
         }
 
-        //TODO Logic
+        if (!$user = Auth::guard('admin')->user()) {
+            return redirect(route('admin.login.form'));
+        }
+
+        if ($user->canDo($request->route()->getName())) {
+            abort(403, 'Access denied');
+        }
 
         return $next($request);
     }
+
+
 }

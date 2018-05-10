@@ -63,11 +63,4 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
-  'yaroslavmolchan/rbac' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'YaroslavMolchan\\Rbac\\RbacServiceProvider',
-    ),
-  ),
 );

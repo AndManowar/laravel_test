@@ -16,7 +16,6 @@ use App\Http\Controllers\Controller;
  */
 class MainpageController extends Controller
 {
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

@@ -5,9 +5,9 @@
  * Date: 09.05.2018
  * Time: 12:02
  */
-use YaroslavMolchan\Rbac\Models\Permission;
-use YaroslavMolchan\Rbac\Models\PermissionGroup;
-use YaroslavMolchan\Rbac\Models\Role;
+use App\Components\Rbac\Models\Permission;
+use App\Components\Rbac\Models\PermissionGroup;
+use App\Components\Rbac\Models\Role;
 
 /**
  * @var Role|Permission|Permission[] $permissions

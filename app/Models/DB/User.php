@@ -2,7 +2,8 @@
 
 namespace App\Models\DB;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Components\Rbac\Traits\Rbac;
+
 
 /**
  * @property int $id
@@ -14,8 +15,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $updated_at
  * @property Post[] $posts
  */
-class User extends Model
+class User extends \Illuminate\Foundation\Auth\User
 {
+    use Rbac;
+
     /**
      * @var array
      */

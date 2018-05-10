@@ -1,3 +1,9 @@
+<?php
+/** @var \App\Models\DB\Admin $admin */
+$admin = Auth::guard('admin')->user();
+
+?>
+
 <nav class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-dark navbar-shadow">
     <div class="navbar-wrapper">
         <div class="navbar-header">
@@ -221,14 +227,14 @@
                                     class="avatar avatar-online"><img
                                         src="{{ asset('admin/images/portrait/small/avatar-s-1.png') }}"
                                         alt="avatar"><i></i></span><span
-                                    class="user-name">John Doe</span></a>
+                                    class="user-name">@php echo $admin->email @endphp</span></a>
                         <div class="dropdown-menu dropdown-menu-right"><a href="#" class="dropdown-item"><i
                                         class="icon-head"></i> Edit Profile</a><a href="#" class="dropdown-item"><i
                                         class="icon-mail6"></i> My Inbox</a><a href="#" class="dropdown-item"><i
                                         class="icon-clipboard2"></i> Task</a><a href="#" class="dropdown-item"><i
                                         class="icon-calendar5"></i> Calender</a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item"><i class="icon-power3"></i> Logout</a>
+                            <a href="{{route('admin.logout')}}" class="dropdown-item"><i class="icon-power3"></i> Logout</a>
                         </div>
                     </li>
                 </ul>

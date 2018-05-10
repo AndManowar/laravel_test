@@ -15,9 +15,9 @@ use App\Components\Rbac\Requests\PermissionGroupRequest;
 use App\Components\Rbac\Requests\RoleRequest;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use YaroslavMolchan\Rbac\Models\Permission;
-use YaroslavMolchan\Rbac\Models\PermissionGroup;
-use YaroslavMolchan\Rbac\Models\Role;
+use App\Components\Rbac\Models\Permission;
+use App\Components\Rbac\Models\PermissionGroup;
+use App\Components\Rbac\Models\Role;
 
 /**
  * Class RbacController

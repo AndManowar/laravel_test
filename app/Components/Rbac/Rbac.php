@@ -10,9 +10,9 @@ namespace App\Components\Rbac;
 
 use App\Components\Rbac\Contracts\RbacInterface;
 use App\Components\Rbac\Repositories\RbacRepository;
-use YaroslavMolchan\Rbac\Models\Permission;
-use YaroslavMolchan\Rbac\Models\PermissionGroup;
-use YaroslavMolchan\Rbac\Models\Role;
+use App\Components\Rbac\Models\Permission;
+use App\Components\Rbac\Models\PermissionGroup;
+use App\Components\Rbac\Models\Role;
 
 /**
  * Class Rbac
@@ -47,7 +47,7 @@ class Rbac implements RbacInterface
         /**
          * @var PermissionGroup $group
          */
-        $group = PermissionGroup::findOrFail($groupId);
+        $group = PermissionGroup::query()->findOrFail($groupId);
 
         if ($isAttach) {
             $group->attachRole($roleId);

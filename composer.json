@@ -12,8 +12,7 @@
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.5.1",
         "laravel/tinker": "^1.0",
-        "leantony/laravel-grid": "2.0.x-dev",
-        "yaroslavmolchan/rbac": "^1.0"
+        "leantony/laravel-grid": "2.0.x-dev"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

@@ -11,9 +11,9 @@ namespace App\Components\Rbac\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use YaroslavMolchan\Rbac\Models\Permission;
-use YaroslavMolchan\Rbac\Models\PermissionGroup;
-use YaroslavMolchan\Rbac\Models\Role;
+use App\Components\Rbac\Models\Permission;
+use App\Components\Rbac\Models\PermissionGroup;
+use App\Components\Rbac\Models\Role;
 
 /**
  * Class RbacRepository
@@ -109,6 +109,6 @@ class RbacRepository
      */
     public function getPermissionGroupList()
     {
-        return PermissionGroup::pluck('name', 'id');
+        return PermissionGroup::query()->pluck('name', 'id');
     }
 }
