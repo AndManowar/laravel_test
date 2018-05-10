@@ -59,4 +59,13 @@ interface RbacInterface
      * @return bool
      */
     public function isGuestPermissionGroupPresent();
+
+    /**
+     * Check if user has permission to current operation
+     *
+     * @param string $slug
+     * @param null|Admin|User $user
+     * @return bool
+     */
+    public function canDo($slug, $user = null);
 }

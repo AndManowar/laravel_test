@@ -13,6 +13,9 @@ use App\Components\Rbac\Repositories\RbacRepository;
 use App\Components\Rbac\Models\Permission;
 use App\Components\Rbac\Models\PermissionGroup;
 use App\Components\Rbac\Models\Role;
+use App\Models\DB\Admin;
+use App\Models\DB\User;
+use Illuminate\Routing\Route;
 
 /**
  * Class Rbac
@@ -74,7 +77,8 @@ class Rbac implements RbacInterface
 
         return array_diff(
             collect(\Route::getRoutes())->map(function ($route) {
-                return $route->uri;
+                /** @var Route $route */
+                return $route->getName();
             })->all(),
             $existingPermissions);
     }
@@ -113,5 +117,61 @@ class Rbac implements RbacInterface
         return collect(PermissionGroup::query()->get()->all())->contains(function ($group) {
             return preg_match('/guest/ui', $group->name);
         });
+    }
+
+    /**
+     * Check if user has permission to current operation
+     *
+     * @param string $slug
+     * @param null|Admin|User $user
+     * @return bool
+     */
+    public function canDo($slug, $user = null)
+    {
+        $permissions = $user ? $this->getUserPermissions($user) : $this->getGuestPermissions();
+
+        return in_array($slug, array_flatten($permissions));
+    }
+
+    /**
+     * Get user permissions
+     *
+     * @param User|Admin $user
+     * @return array
+     */
+    private function getUserPermissions($user)
+    {
+        return collect($user->roles)->map(function ($role) {
+            /** @var Role $role */
+            return collect($role->permissionGroups)->map(function ($group) {
+                /** @var PermissionGroup $group */
+                return collect($group->permissions)->map(function ($permission) {
+                    return $permission->name;
+                })->all();
+            })->all();
+        })->all();
+    }
+
+    /**
+     * Get guest permissions
+     *
+     * @return array
+     */
+    private function getGuestPermissions()
+    {
+        $guestGroup = array_filter(collect(PermissionGroup::query()->get()->all())->map(function ($group) {
+            return preg_match('/guest/ui', $group->name) ? $group : '';
+        })->all());
+
+        if (empty($guestGroup)) {
+            return [];
+        }
+
+        return collect($guestGroup)->map(function ($group) {
+            /** @var PermissionGroup $group */
+            return collect($group->permissions)->map(function ($permission) {
+                return $permission->name;
+            })->all();
+        })->all();
     }
 }

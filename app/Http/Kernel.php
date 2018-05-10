@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Components\Rbac\Middlewares\RbacMiddlewareBack;
+use App\Components\Rbac\Middlewares\RbacMiddlewareFront;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -63,8 +64,7 @@ class Kernel extends HttpKernel
         'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'ajax'          => \App\Components\Handbook\Middleware\AjaxMiddleware::class,
-        'role'          => \YaroslavMolchan\Rbac\Middleware\CheckRole::class,
-        'permission'    => \YaroslavMolchan\Rbac\Middleware\CheckPermission::class,
-        'admin_rbac'    => RbacMiddlewareBack::class
+        'admin_rbac'    => RbacMiddlewareBack::class,
+        'front_rbac'    => RbacMiddlewareFront::class,
     ];
 }

@@ -2,23 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: manowartop
- * Date: 09.05.2018
- * Time: 22:39
+ * Date: 10.05.2018
+ * Time: 19:01
  */
 
 namespace App\Components\Rbac\Middlewares;
 
 use App\Components\Rbac\Facades\RbacFacade;
-use App\Models\DB\Admin;
+use App\Models\DB\User;
 use Auth;
 use Closure;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * Class RbacMiddleware
+ * Class RbacMiddlewareFront
  * @package App\Components\Rbac\Middlewares
  */
-class RbacMiddlewareBack
+class RbacMiddlewareFront
 {
     /**
      * Handle an incoming request.
@@ -33,12 +32,8 @@ class RbacMiddlewareBack
         if (!RbacFacade::isGuestPermissionGroupPresent()) {
             throw new BadRequestHttpException('GuestPermission Permission Group must be specified');
         }
-        /** @var Admin $user */
-        if (!$user = Auth::guard('admin')->user()) {
-            return redirect(route('admin.login.form'));
-        }
 
-        if (!RbacFacade::canDo($request->route()->getName(), $user)) {
+        if (!RbacFacade::canDo($request->route()->getName(), Auth::guard('web')->user())) {
             abort(403, 'Доступ запрещен!');
         }
 

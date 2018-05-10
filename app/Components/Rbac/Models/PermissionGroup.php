@@ -40,9 +40,10 @@ class PermissionGroup extends Model
      *
      * @param int|Role $role
      */
-    public function attachRole(Role $role)
+    public function attachRole($role)
     {
         if (!($role instanceof Role) && ctype_digit($role)) {
+            /** @var Role $role */
             $role = Role::query()->find($role);
         }
 
