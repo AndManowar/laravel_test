@@ -2,8 +2,8 @@
 
 namespace App\Components\Rbac\Models;
 
-use App\Models\DB\Admin;
-use App\Models\DB\User;
+use App\Components\Admin\Models\Admin;;;
+use App\Components\User\Models\User;;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use App\Components\Rbac\Helpers\CacheHelper;

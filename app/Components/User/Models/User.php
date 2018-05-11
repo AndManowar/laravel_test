@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\DB;
+namespace App\Components\User\Models;
 
 use App\Components\Rbac\Traits\Rbac;
 

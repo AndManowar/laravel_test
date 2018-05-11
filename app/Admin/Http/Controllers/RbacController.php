@@ -182,7 +182,7 @@ class RbacController extends Controller
     }
 
     /**
-     * Permission Group dele
+     * Permission Group delete
      *
      * @param integer $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -255,6 +255,7 @@ class RbacController extends Controller
      * Remove Permission from Group
      *
      * @return  void
+     * @throws \Exception
      */
     public function deleteFromGroup()
     {

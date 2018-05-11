@@ -8,15 +8,11 @@
 
 Route::get('/dashboard', 'MainpageController@index')->name('admin.dashboard')->middleware('admin_rbac');
 
-Route::get('/handbooks', 'HandbookController@index')->name('admin.handbooks')->middleware('admin_rbac');
-
-Route::get('/settings', 'SettingsController@index')->name('admin.settings')->middleware('admin_rbac');
-
-
 Route::get('/login/form', 'Auth\LoginController@showLoginForm')->name('admin.login.form');
 Route::get('/login', 'Auth\LoginController@login')->name('admin.login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('admin.logout')->middleware('admin_rbac');
 
+Route::get('/handbooks', 'HandbookController@index')->name('admin.handbooks')->middleware('admin_rbac');
 Route::group(['prefix' => 'handbook', 'middleware' => ['admin_rbac']], function () {
     Route::post('/create', 'HandbookController@create')->name('admin.handbook.create');
     Route::post('/update/{id}', 'HandbookController@update')->name('admin.handbook.update');
@@ -30,7 +26,7 @@ Route::group(['prefix' => 'handbook', 'middleware' => ['admin_rbac']], function 
     Route::get('/refresh-cache', 'HandbookController@refreshCache')->name('admin.handbook.refresh-cache');
 });
 
-
+Route::get('/settings', 'SettingsController@index')->name('admin.settings')->middleware('admin_rbac');
 Route::group(['prefix' => 'setting', 'middleware' => ['admin_rbac']], function () {
     Route::post('/create', 'SettingsController@create')->name('admin.setting.create');
     Route::post('/update/{id}', 'SettingsController@update')->name('admin.setting.update');
@@ -45,7 +41,6 @@ Route::group(['prefix' => 'rbac', 'middleware' => ['admin_rbac']], function () {
     Route::get('change-role-group', 'RbacController@changeRoleGroup')->name('admin.rbac.change-role-group');
     Route::get('/set-permissions', 'RbacController@addPermissionsToGroups')->name('admin.rbac.set-permissions');
     Route::get('/routes', 'RbacController@getRoutesWithoutPermissions')->name('admin.rbac.routes');
-
 
     Route::group(['prefix' => 'role', 'middleware' => ['admin_rbac']], function () {
         Route::post('/create', 'RbacController@createRole')->name('admin.rbac.role.create');
@@ -62,5 +57,21 @@ Route::group(['prefix' => 'rbac', 'middleware' => ['admin_rbac']], function () {
         Route::get('/remove-permission', 'RbacController@deleteFromGroup')->name('admin.rbac.permission-group.remove-permission');
         Route::get('/permissions/{id}', 'RbacController@showPermissionsByGroup')->name('admin.rbac.permission-group.permissions');
     });
+});
 
+Route::get('/users', 'UserController@index')->name('admin.users')->middleware('admin_rbac');
+Route::group(['prefix' => 'user', 'middleware' => ['admin_rbac']], function () {
+    Route::post('/edit/{id}', 'UserController@editUser')->name('admin.user.edit');
+    Route::post('/create', 'UserController@createUser')->name('admin.user.create');
+    Route::post('/profile/{id}', 'UserController@profile')->name('admin.user.profile');
+    Route::get('/show/{id?}', 'UserController@form')->name('admin.user.form');
+    Route::get('/delete/{id}', 'UserController@delete')->name('admin.user.delete');
+});
+
+Route::get('/admins', 'AdministratorController@index')->name('admin.admins')->middleware('admin_rbac');
+Route::group(['prefix' => 'admin', 'middleware' => ['admin_rbac']], function () {
+    Route::post('/edit/{id}', 'AdministratorController@editAdmin')->name('admin.admin.edit');
+    Route::post('/create', 'AdministratorController@createAdmin')->name('admin.admin.create');
+    Route::get('/show/{id?}', 'AdministratorController@form')->name('admin.admin.form');
+    Route::get('/delete/{id}', 'AdministratorController@delete')->name('admin.admin.delete');
 });

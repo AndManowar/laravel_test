@@ -9,7 +9,7 @@
 namespace App\Components\Rbac\Middlewares;
 
 use App\Components\Rbac\Facades\RbacFacade;
-use App\Models\DB\Admin;
+use App\Components\Admin\Models\Admin;;;
 use Auth;
 use Closure;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

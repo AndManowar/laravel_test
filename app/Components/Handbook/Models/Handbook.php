@@ -62,7 +62,7 @@ class Handbook extends Model
         if ($this->relation) {
 
             /** @var Handbook $handbook */
-            $handbook = Handbook::findOrFail($this->relation);
+            $handbook = Handbook::query()->findOrFail($this->relation);
 
             return $handbook->systemName;
         }

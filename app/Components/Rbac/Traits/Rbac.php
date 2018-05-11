@@ -3,7 +3,7 @@
 namespace App\Components\Rbac\Traits;
 
 use App\Components\Rbac\Models\Role;
-use App\Models\DB\User;
+use App\Components\User\Models\User;;
 
 /**
  * Trait Rbac

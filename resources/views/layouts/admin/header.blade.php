@@ -1,5 +1,5 @@
 <?php
-/** @var \App\Models\DB\Admin $admin */
+/** @var \App\Components\Admin\Models\Admin;; $admin */
 $admin = Auth::guard('admin')->user();
 
 ?>
@@ -117,11 +117,11 @@ $admin = Auth::guard('admin')->user();
                                         </div>
                                     </div>
                                 </a>
-                                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;">
-                                    <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 3px;">
+                                    <div class="ps-scrollbar-x" tabindex="0" style="left: 0; width: 0;"></div>
                                 </div>
-                                <div class="ps-scrollbar-y-rail" style="top: 0px; height: 320px; right: 3px;">
-                                    <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 237px;"></div>
+                                <div class="ps-scrollbar-y-rail" style="top: 0; height: 320px; right: 3px;">
+                                    <div class="ps-scrollbar-y" tabindex="0" style="top: 0; height: 237px;"></div>
                                 </div>
                             </li>
                             <li class="dropdown-menu-footer"><a href="javascript:void(0)"
@@ -210,11 +210,11 @@ $admin = Auth::guard('admin')->user();
                                         </div>
                                     </div>
                                 </a>
-                                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;">
-                                    <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 3px;">
+                                    <div class="ps-scrollbar-x" tabindex="0" style="left: 0; width: 0;"></div>
                                 </div>
-                                <div class="ps-scrollbar-y-rail" style="top: 0px; height: 320px; right: 3px;">
-                                    <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 269px;"></div>
+                                <div class="ps-scrollbar-y-rail" style="top: 0; height: 320px; right: 3px;">
+                                    <div class="ps-scrollbar-y" tabindex="0" style="top: 0; height: 269px;"></div>
                                 </div>
                             </li>
                             <li class="dropdown-menu-footer"><a href="javascript:void(0)"

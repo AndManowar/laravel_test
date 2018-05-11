@@ -99,6 +99,12 @@ class RbacRepository
      */
     public function deleteRbacModel($id, $className)
     {
+        $model = $this->getRbacModel($className, $id);
+
+        if ($model instanceof PermissionGroup && !empty($model->permissions->all())) {
+            return false;
+        }
+
         return $this->getRbacModel($className, $id)->delete();
     }
 

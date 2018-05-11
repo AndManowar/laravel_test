@@ -13,8 +13,8 @@ use App\Components\Rbac\Repositories\RbacRepository;
 use App\Components\Rbac\Models\Permission;
 use App\Components\Rbac\Models\PermissionGroup;
 use App\Components\Rbac\Models\Role;
-use App\Models\DB\Admin;
-use App\Models\DB\User;
+use App\Components\Admin\Models\Admin;;;
+use App\Components\User\Models\User;;
 use Illuminate\Routing\Route;
 
 /**

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models\DB;
+namespace App\Components\Admin\Models;
 
 use App\Components\Rbac\Traits\Rbac;
+use Illuminate\Foundation\Auth\User;
 
 /**
  * @property int $id
@@ -12,8 +13,10 @@ use App\Components\Rbac\Traits\Rbac;
  * @property string $password
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @property Profile $profile
  */
-class Admin extends \Illuminate\Foundation\Auth\User
+class Admin extends User
 {
     use Rbac;
 
@@ -39,4 +42,11 @@ class Admin extends \Illuminate\Foundation\Auth\User
         'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 }

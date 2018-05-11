@@ -9,7 +9,6 @@
 namespace App\Components\Rbac\Middlewares;
 
 use App\Components\Rbac\Facades\RbacFacade;
-use App\Models\DB\User;
 use Auth;
 use Closure;
 
