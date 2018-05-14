@@ -22,11 +22,15 @@ class AdminRequest extends Request
     public function rules()
     {
         return [
-            'surname'   => 'required|string',
-            'name'      => 'required|string',
-            'last_name' => 'required|string',
-            'birthday'  => 'required|date:Y-m-d',
-            'avatar'    => 'required|string',
+            'surname'     => 'required|string',
+            'email'       => 'required|email|unique:admins,email,'.$this->get('id'),
+            'name'        => 'required|string',
+            'last_name'   => 'required|string',
+            'birthday'    => 'required|date:Y-m-d',
+            'image'       => 'image|mimes:jpeg,png',
+            'password'    => $this->get('id') ? '' : 'required|min:5',
+            'newPassword' => 'min:5|nullable',
+            'role'        => 'required|integer',
         ];
     }
 
@@ -41,6 +45,12 @@ class AdminRequest extends Request
             'last_name.required' => 'Поле обязательно к заполнению',
             'birthday.required'  => 'Поле обязательно к заполнению',
             'avatar.required'    => 'Поле обязательно к заполнению',
+            'password.required'  => 'Поле обязательно к заполнению',
+            'role.required'      => 'Поле обязательно к заполнению',
+            'password.min'       => 'Длина не может быть меньше :min символов',
+            'newPassword.min'    => 'Длина не может быть меньше :min символов',
+            'email.unique'       => 'Данный email адресс уже занят',
+            'email.email'        => 'Неверный адресс',
         ];
     }
 }

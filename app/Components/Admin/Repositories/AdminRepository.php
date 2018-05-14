@@ -9,6 +9,9 @@
 namespace App\Components\Admin\Repositories;
 
 use App\Components\Admin\Models\Admin;
+use App\Components\Admin\Models\Profile;
+use App\Components\FileUploader\Facades\FileUploader;
+use Hash;
 
 /**
  * Class AdminRepository
@@ -35,7 +38,26 @@ class AdminRepository
      */
     public function create(array $attributes)
     {
-        return $this->getAdmin()->fill($attributes)->save();
+        /** @var Admin $admin */
+        $admin = $this->getAdmin()->fill($attributes);
+        $profile = new Profile();
+
+        $admin->password = Hash::make($attributes['password']);
+        $admin->roles()->attach($attributes['role']);
+        $profile->fill($attributes);
+
+        if (isset($attributes['image'])) {
+            if (!FileUploader::uploadFile($attributes['image'], 'avatars')) {
+                return false;
+            }
+            $profile->avatar = FileUploader::getUploadedFilePath();
+        }
+
+        if (!$admin->save()) {
+            return false;
+        }
+
+        return $admin->profile()->save($profile);
     }
 
     /**
@@ -51,7 +73,19 @@ class AdminRepository
         $admin = $this->getAdmin($id);
 
         $admin->fill($attributes);
+        $admin->attackRole($attributes['role']);
         $admin->profile->fill($attributes);
+
+        if (isset($attributes['image'])) {
+            if (!FileUploader::uploadFile($attributes['image'], 'avatars')) {
+                return false;
+            }
+            $admin->profile->avatar = FileUploader::getUploadedFilePath();
+        }
+
+        if (isset($attributes['newPassword'])) {
+            $admin->password = Hash::make($attributes['newPassword']);
+        }
 
         if (!$admin->save() || !$admin->profile->save()) {
             return false;

@@ -2,6 +2,7 @@
 
 namespace App\Components\Admin\Models;
 
+use App\Components\Rbac\Models\Role;
 use App\Components\Rbac\Traits\Rbac;
 use Illuminate\Foundation\Auth\User;
 
@@ -31,7 +32,6 @@ class Admin extends User
     protected $fillable = [
         'email',
         'active',
-        'password',
     ];
 
     /**
@@ -48,5 +48,29 @@ class Admin extends User
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    /**
+     * Get full name
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->profile->surname.' '.$this->profile->name;
+    }
+
+    /**
+     * Get user role (in this case user can have only one role)
+     *
+     * @return Role|string
+     */
+    public function getRole()
+    {
+        if(isset($this->roles->all()[0])){
+            return $this->roles->all()[0];
+        }
+
+        return '';
     }
 }

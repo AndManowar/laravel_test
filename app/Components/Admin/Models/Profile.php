@@ -41,7 +41,7 @@ class Profile extends Model
     /**
      * @var array
      */
-    protected $fillable = ['surname', 'name', 'last_name', 'birthday', 'avatar'];
+    protected $fillable = ['surname', 'name', 'last_name', 'birthday'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

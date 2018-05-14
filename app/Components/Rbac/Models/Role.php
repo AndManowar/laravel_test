@@ -119,6 +119,7 @@ class Role extends Model
      */
     public function attachGroup($group)
     {
+        /** @var PermissionGroup $group */
         if (!($group instanceof PermissionGroup) && ctype_digit($group)) {
             $group = PermissionGroup::query()->find($group);
         }
@@ -142,6 +143,7 @@ class Role extends Model
      */
     public function detachGroup($group)
     {
+        /** @var PermissionGroup $group */
         if (!($group instanceof PermissionGroup) && ctype_digit($group)) {
             $group = PermissionGroup::query()->find($group);
         }

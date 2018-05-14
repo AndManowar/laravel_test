@@ -174,4 +174,14 @@ class Rbac implements RbacInterface
             })->all();
         })->all();
     }
+
+    /**
+     * Get roles list
+     *
+     * @return array
+     */
+    public function getRolesList()
+    {
+        return Role::query()->pluck('name', 'id')->all();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Components\Admin\Grids;
 
+use App\Components\Admin\Models\Admin;
 use Closure;
 use Leantony\Grid\Grid;
 
@@ -34,15 +35,38 @@ class AdminGrid extends Grid
     public function setColumns()
     {
         $this->columns = [
-            "id"          => [
+            "id"         => [
                 "label"  => "ID",
-                "filter" => [
-                    "enabled"  => true,
-                    "operator" => "=",
-                ],
             ],
-            "email"  => [
-                "label"  => "System Name",
+            "surname"    => [
+                "label"     => "Surname",
+                "search"    => [
+                    "enabled" => false,
+                ],
+                'presenter' => function ($columnData) {
+                    return $columnData->profile->surname;
+                },
+            ],
+            "name"       => [
+                "label"     => "Name",
+                "search"    => [
+                    "enabled" => false,
+                ],
+                'presenter' => function ($columnData) {
+                    return $columnData->profile->name;
+                },
+            ],
+            "last_name"  => [
+                "label"     => "System Name",
+                "search"    => [
+                    "enabled" => false,
+                ],
+                'presenter' => function ($columnData) {
+                    return $columnData->profile->last_name;
+                },
+            ],
+            "email"      => [
+                "label"  => "Email",
                 "search" => [
                     "enabled" => true,
                 ],
@@ -51,11 +75,21 @@ class AdminGrid extends Grid
                     "operator" => "like",
                 ],
             ],
-            "created_at"  => [
+            "role"       => [
+                "label"     => "Email",
+                "search"    => [
+                    "enabled" => false,
+                ],
+                'presenter' => function ($columnData) {
+                    /** @var Admin $columnData */
+                    return $columnData->getRole()->name;
+                },
+            ],
+            "created_at" => [
                 "sort"   => false,
                 "date"   => "true",
                 "filter" => [
-                    "enabled"  => true,
+                    "enabled"  => false,
                     "type"     => "date",
                     "operator" => "<=",
                 ],
@@ -129,5 +163,7 @@ class AdminGrid extends Grid
     /**
      *
      */
-    public static function getToolbarSize(){}
+    public static function getToolbarSize()
+    {
+    }
 }

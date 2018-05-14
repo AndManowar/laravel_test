@@ -21,20 +21,52 @@ $route = $admin->exists ? route('admin.admin.edit', ['id' => $admin->id]) : rout
                     id="basic-layout-form">{{$admin->exists ? 'Администратор - '.$admin->email : 'Новый администратор'}}</h4>
                 <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             </div>
+            @if($admin->exists)
+                <div class="card-header no-border text-xs-center">
+                    <img src="{{asset('storage/uploads/avatars/'.$admin->profile->avatar)}}" style="max-width: 200px"
+                         alt="{{$admin->getFullName()}}" class="rounded-circle img-fluid center-block">
+                    <h5 class="card-title mt-1">{{$admin->getFullName()}}</h5>
+                </div>
+            @endif
             <div class="card-body collapse in">
                 <div class="card-block">
                     <form class="form" method="post" id="role_form"
                           action="<?= $route ?>"
-                          data-route="<?= $route ?>">
+                          data-route="<?= $route ?>"
+                          enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-body">
                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name">Role</label>
+                                        <select name="role" id="role" class="form-control" title="Role">
+                                            <option value="">Choose the role</option>
+                                            @forelse(\App\Components\Rbac\Facades\RbacFacade::getRolesList() as $id => $role)
+                                                <option value="{{$id}}" {{$admin->exists && $admin->getRole()->id == $id ? 'selected' : ''}}>{{$role}}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                        <span class="help-block">
+                                            <strong>
+                                                @php
+                                                    if ($errors->has('role')) {
+                                                        echo $errors->first('role');
+                                                    }
+                                                @endphp
+                                            </strong>
+                                            </span>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
+                                    @if($admin->exists)
+                                        <input type="hidden" name="id" value="{{$admin->id}}">
+                                    @endif
                                     <div class="form-group">
                                         <label for="name">Email</label>
                                         <input type="email" id="email" class="form-control"
                                                placeholder="Email" name="email"
-                                               value="{{old('email') ? old('email') : $admin->email}}">
+                                               value="{{old('email') ? old('email') : $admin->exists ? $admin->email : ''}}">
                                         <span class="help-block">
                                             <strong>
                                                 @php
@@ -46,13 +78,13 @@ $route = $admin->exists ? route('admin.admin.edit', ['id' => $admin->id]) : rout
                                             </span>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="slug">New Password</label>
-                                        <input type="text" id="newPassword" class="form-control"
-                                               placeholder="newPassword" name="newPassword">
-                                        <span class="help-block">
+                                @if($admin->exists)
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="slug">New Password</label>
+                                            <input type="text" id="newPassword" class="form-control"
+                                                   placeholder="New Password" name="newPassword">
+                                            <span class="help-block">
                                         <strong>
                                                 @php
                                                     if ($errors->has('newPassword')) {
@@ -61,15 +93,32 @@ $route = $admin->exists ? route('admin.admin.edit', ['id' => $admin->id]) : rout
                                                 @endphp
                                         </strong>
                                         </span>
+                                        </div>
                                     </div>
-                                </div>
-
+                                @else
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="slug">Password</label>
+                                            <input type="text" id="password" class="form-control"
+                                                   placeholder="Password" name="password">
+                                            <span class="help-block">
+                                        <strong>
+                                                @php
+                                                    if ($errors->has('password')) {
+                                                        echo $errors->first('password');
+                                                    }
+                                                @endphp
+                                        </strong>
+                                        </span>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="slug">Surname</label>
                                         <input type="text" id="surname" class="form-control"
                                                placeholder="surname" name="surname"
-                                               value="{{old('surname') ? old('surname') : $admin->profile->surname}}">
+                                               value="{{old('surname') ? old('surname') : $admin->exists && $admin->profile->exists ? $admin->profile->surname : ''}}">
                                         <span class="help-block">
                                         <strong>
                                                 @php
@@ -87,7 +136,7 @@ $route = $admin->exists ? route('admin.admin.edit', ['id' => $admin->id]) : rout
                                         <label for="slug">Name</label>
                                         <input type="text" id="name" class="form-control"
                                                placeholder="Name" name="name"
-                                               value="{{old('name') ? old('name') : $admin->profile->name}}">
+                                               value="{{old('name') ? old('name') : $admin->exists && $admin->profile->exists ? $admin->profile->name : ''}}">
                                         <span class="help-block">
                                         <strong>
                                                 @php
@@ -105,7 +154,7 @@ $route = $admin->exists ? route('admin.admin.edit', ['id' => $admin->id]) : rout
                                         <label for="slug">Last Name</label>
                                         <input type="text" id="last_name" class="form-control"
                                                placeholder="Last Name" name="last_name"
-                                               value="{{old('last_name') ? old('last_name') : $admin->profile->last_name}}">
+                                               value="{{old('last_name') ? old('last_name') : $admin->exists && $admin->profile->exists ? $admin->profile->last_name : ''}}">
                                         <span class="help-block">
                                         <strong>
                                                 @php
@@ -123,7 +172,7 @@ $route = $admin->exists ? route('admin.admin.edit', ['id' => $admin->id]) : rout
                                         <label for="slug">Birthday</label>
                                         <input type="date" id="birthday" class="form-control"
                                                placeholder="Birthday" name="birthday"
-                                               value="{{old('birthday') ? old('birthday') : $admin->profile->birthday}}">
+                                               value="{{old('birthday') ? old('birthday') : $admin->exists && $admin->profile->exists ? $admin->profile->birthday : ''}}">
                                         <span class="help-block">
                                         <strong>
                                                 @php
@@ -138,15 +187,14 @@ $route = $admin->exists ? route('admin.admin.edit', ['id' => $admin->id]) : rout
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="slug">New Avatar</label>
-                                        <input type="file" id="avatar" class="form-control"
-                                               placeholder="Avatar" name="avatar"
-                                               value="{{old('avatar') ? old('avatar') : $admin->profile->avatar}}">
+                                        <label for="image">Change Avatar</label>
+                                        <input type="file" id="image" class="form-control"
+                                               placeholder="Change Avatar" name="image">
                                         <span class="help-block">
                                         <strong>
                                                 @php
-                                                    if ($errors->has('avatar')) {
-                                                        echo $errors->first('avatar');
+                                                    if ($errors->has('image')) {
+                                                        echo $errors->first('image');
                                                     }
                                                 @endphp
                                         </strong>

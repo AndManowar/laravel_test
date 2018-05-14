@@ -156,6 +156,7 @@ return [
         \App\Components\Rbac\Providers\RbacServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        \App\Components\FileUploader\Providers\FileServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -221,6 +222,7 @@ return [
         'Handbook'     => \App\Components\Handbook\Facades\Handbook::class,
         'Settings'     => \App\Components\Settings\Facades\Settings::class,
         'Rbac'         => \App\Components\Rbac\Facades\RbacFacade::class,
+        'FileUploader' => \App\Components\FileUploader\Facades\FileUploader::class,
     ],
 
 ];

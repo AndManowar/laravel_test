@@ -41,10 +41,11 @@
     37 => 'App\\Components\\Rbac\\Providers\\RbacServiceProvider',
     38 => 'Laracasts\\Flash\\FlashServiceProvider',
     39 => 'Barryvdh\\Debugbar\\ServiceProvider',
-    40 => 'App\\Providers\\AppServiceProvider',
-    41 => 'App\\Providers\\AuthServiceProvider',
-    42 => 'App\\Providers\\EventServiceProvider',
-    43 => 'App\\Providers\\RouteServiceProvider',
+    40 => 'App\\Components\\FileUploader\\Providers\\FileServiceProvider',
+    41 => 'App\\Providers\\AppServiceProvider',
+    42 => 'App\\Providers\\AuthServiceProvider',
+    43 => 'App\\Providers\\EventServiceProvider',
+    44 => 'App\\Providers\\RouteServiceProvider',
   ),
   'eager' => 
   array (
@@ -71,10 +72,11 @@
     20 => 'App\\Components\\Rbac\\Providers\\RbacServiceProvider',
     21 => 'Laracasts\\Flash\\FlashServiceProvider',
     22 => 'Barryvdh\\Debugbar\\ServiceProvider',
-    23 => 'App\\Providers\\AppServiceProvider',
-    24 => 'App\\Providers\\AuthServiceProvider',
-    25 => 'App\\Providers\\EventServiceProvider',
-    26 => 'App\\Providers\\RouteServiceProvider',
+    23 => 'App\\Components\\FileUploader\\Providers\\FileServiceProvider',
+    24 => 'App\\Providers\\AppServiceProvider',
+    25 => 'App\\Providers\\AuthServiceProvider',
+    26 => 'App\\Providers\\EventServiceProvider',
+    27 => 'App\\Providers\\RouteServiceProvider',
   ),
   'deferred' => 
   array (

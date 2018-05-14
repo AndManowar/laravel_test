@@ -68,4 +68,11 @@ interface RbacInterface
      * @return bool
      */
     public function canDo($slug, $user = null);
+
+    /**
+     * Get roles list
+     *
+     * @return array
+     */
+    public function getRolesList();
 }
