@@ -18,7 +18,6 @@ $route = $setting->exists ? route('admin.setting.update', ['id' => $setting->id]
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title" id="basic-layout-form">Структура справочника</h4>
                 <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             </div>
             <div class="card-body collapse in">
@@ -28,7 +27,6 @@ $route = $setting->exists ? route('admin.setting.update', ['id' => $setting->id]
                           data-route="<?= $route ?>">
                         {{ csrf_field() }}
                         <div class="form-body">
-                            <h4 class="form-section"><i class="icon-align-center2"></i> Основные поля</h4>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
